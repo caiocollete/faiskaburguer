@@ -6,6 +6,7 @@ import com.faiskaburguer.db.dal.TipoPagamentoDAL;
 import com.faiskaburguer.db.entidade.Pedido;
 import com.faiskaburguer.db.entidade.Produtos;
 import com.faiskaburguer.db.entidade.TipoPagamento;
+import com.faiskaburguer.db.util.SingletonDB;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -23,6 +24,15 @@ public class CtrlPedido {
 
     @FXML
     private CheckBox viagem_check;
+
+    @FXML
+    private TextField rua;
+
+    @FXML
+    private TextField numero_casa;
+
+    @FXML
+    private TextField cep;
 
     @FXML
     private MenuButton selectionProds;
@@ -100,7 +110,7 @@ public class CtrlPedido {
 
         // Adiciona taxa de entrega se o pedido for "para viagem"
         if (viagem_check.isSelected()) {
-            totalDouble += 5.00;
+            totalDouble += 5;
         }
 
         total = "R$ " + String.format("%.2f", totalDouble);
@@ -144,5 +154,12 @@ public class CtrlPedido {
                 System.out.println("Pedido salvo com sucesso!");
             }
         });
+    }
+
+    @FXML
+    protected void ativarEndereco(){
+        rua.setDisable(!viagem_check.isSelected());
+        numero_casa.setDisable(!viagem_check.isSelected());
+        cep.setDisable(!viagem_check.isSelected());
     }
 }

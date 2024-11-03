@@ -14,8 +14,8 @@ public class PedidoDAL implements IDAL <Pedido>{
     public boolean gravar(Pedido entidade) {
         boolean erro = false;
         String sqlPedido = """ 
-                    INSERT INTO pedido (ped_data, ped_clinome, ped_clifone, ped_total, ped_viagem, tpg_id, ped_id) 
-                    VALUES ('#1', '#2', '#3', '#4', '#5', #6); 
+                    INSERT INTO pedido (ped_data, ped_clinome, ped_clifone, ped_total, ped_viagem, tpg_id, ped_id)
+                    VALUES ('#1', '#2', '#3', '#4', '#5', #6, #7);
                     """;
         sqlPedido = sqlPedido.replace("#1",entidade.getData().toString());
         sqlPedido = sqlPedido.replace("#2",entidade.getClinome());
@@ -23,7 +23,7 @@ public class PedidoDAL implements IDAL <Pedido>{
         sqlPedido = sqlPedido.replace("#4",""+entidade.getTotal());
         sqlPedido = sqlPedido.replace("#5",""+entidade.getViagem());
         sqlPedido = sqlPedido.replace("#6",""+entidade.getTipoPagamento().getId());
-        sqlPedido = sqlPedido.replace("#7",""+SingletonDB.getConexao().getMaxPK("pedido","ped_id")+1);
+        sqlPedido = sqlPedido.replace("#7",""+(SingletonDB.getConexao().getMaxPK("pedido","ped_id")+1));
         if (SingletonDB.getConexao().manipular(sqlPedido)) {
             int id= SingletonDB.getConexao().getMaxPK("pedido","ped_id");
                 for(Pedido.Item item : entidade.getItens()){

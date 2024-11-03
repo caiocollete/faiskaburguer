@@ -19,7 +19,8 @@ public class ProdutoDAL implements IDAL <Produtos> {
                     	VALUES (#1, '#2', '#3', #4, #5);
                 """;
 
-        sql = sql.replace("#1", "" + SingletonDB.getConexao().getMaxPK("produto","pro_id")+1);
+
+        sql = sql.replace("#1", "" + (SingletonDB.getConexao().getMaxPK("produto","pro_id")+1));
         sql = sql.replace("#2", "" + entidade.getNome());
         sql = sql.replace("#3", "" + entidade.getDescricao());
         sql = sql.replace("#4", "" + entidade.getValor());

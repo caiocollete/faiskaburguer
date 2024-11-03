@@ -18,14 +18,17 @@
             <Text layoutX="58.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome Cliente" />
             <TextField fx:id="numero_cliente" layoutX="57.0" layoutY="140.0" />
             <Text layoutX="57.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número Cliente" />
-            <CheckBox fx:id="viagem_check" layoutX="63.0" layoutY="186.0" mnemonicParsing="false" text="Viagem" />
+            <CheckBox fx:id="viagem_check" layoutX="55.0" layoutY="222.0" mnemonicParsing="false" onAction="#ativarEndereco" text="Viagem" />
             <ListView fx:id="listSelectionProds" layoutX="300.0" layoutY="53.0" prefHeight="200.0" prefWidth="213.0" />
             <Text layoutX="300.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Produtos adicionada no pedido" />
             <MenuButton fx:id="selectionProds" layoutX="303.0" layoutY="254.0" mnemonicParsing="false" text="Produtos" />
             <Button fx:id="gravar" layoutX="513.0" layoutY="347.0" mnemonicParsing="false" onAction="#GravarPedido" text="Gravar" />
             <Text fx:id="total_pedido" layoutX="446.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$00.00" />
             <Text layoutX="407.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total: " />
-            <SplitMenuButton fx:id="selectionTipoPagamento" layoutX="57.0" layoutY="233.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="172.0" text="Selecione o tipo de pagamento" />
+            <SplitMenuButton fx:id="selectionTipoPagamento" layoutX="55.0" layoutY="185.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="172.0" text="Selecione o tipo de pagamento" />
+            <TextField fx:id="rua" disable="true" layoutX="55.0" layoutY="254.0" promptText="Rua" />
+            <TextField fx:id="cep" disable="true" layoutX="56.0" layoutY="291.0" promptText="CEP" />
+            <TextField fx:id="numero_casa" disable="true" layoutX="213.0" layoutY="254.0" prefHeight="27.0" prefWidth="41.0" promptText="N°" />
          </children>
       </Pane>
    </center>
