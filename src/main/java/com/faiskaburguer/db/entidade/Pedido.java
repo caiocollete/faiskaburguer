@@ -16,18 +16,9 @@ public class Pedido {
     private TipoPagamento tipoPagamento;
     private List<Item> listItens;
 
-    public Pedido(int id, String clinome) {
-        this.id = id;
-        this.data = data;
-        this.clinome = clinome;
-        this.clifone = clifone;
-        this.total = total;
-        this.viagem = viagem;
-        this.tipoPagamento = tipoPagamento;
-        listItens = new ArrayList<>();
-    }
 
-    public Pedido(LocalDate data, String clinome, String clifone, double total, char viagem, TipoPagamento tipoPagamento) {
+    // usa para criar o pedido
+    public Pedido(LocalDate data, String clinome, String clifone, double total, char viagem, TipoPagamento tipoPagamento, List<Item> listItens) {
         this.id=0;
         this.data = data;
         this.clinome = clinome;
@@ -35,9 +26,10 @@ public class Pedido {
         this.total = total;
         this.viagem = viagem;
         this.tipoPagamento = tipoPagamento;
-        listItens = new ArrayList<>();
+        this.listItens = listItens;
     }
 
+    // usa para resgatar o pedido do db
     public Pedido(int id, LocalDate data, String clinome, String clifone, double total, char viagem, TipoPagamento tipoPagamento) {
         this.id = id;
         this.data = data;
@@ -46,10 +38,6 @@ public class Pedido {
         this.total = total;
         this.viagem = viagem;
         this.tipoPagamento = tipoPagamento;
-    }
-
-    public Pedido() {
-        this(0, "");
     }
 
     public int getId() {

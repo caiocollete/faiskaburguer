@@ -75,4 +75,24 @@ public class CategoriaDAL implements IDAL <Categoria> {
 
         return categoriaList;
     }
+
+
+    public List<Categoria> get() {
+        List<Categoria> categoriaList = new ArrayList<>();
+        String sql = "SELECT * FROM categoria";
+        ResultSet resultSet = SingletonDB.getConexao().consultar(sql);
+
+
+        try {
+            while(resultSet.next()) {
+                Categoria categoria = new Categoria(resultSet.getInt("cat_id"),
+                        resultSet.getString("cat_nome"));
+                categoriaList.add(categoria);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return categoriaList;
+    }
 }

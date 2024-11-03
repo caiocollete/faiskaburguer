@@ -1,0 +1,12 @@
+.button:hover {
+    -fx-background-color: #005fa3;
+    -fx-cursor: hand;
+}
+
+.text-field {
+    -fx-background-insets: 0;
+    -fx-background-radius: 5;
+    -fx-border-color: #444;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+}

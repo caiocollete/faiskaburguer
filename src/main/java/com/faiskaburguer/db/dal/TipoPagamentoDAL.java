@@ -61,6 +61,23 @@ public class TipoPagamentoDAL implements IDAL <TipoPagamento>{
             sql+= " WHERE "+ filtro;
         ResultSet resultSet = SingletonDB.getConexao().consultar(sql);
 
+        try {
+            while(resultSet.next()) {
+                TipoPagamento tpg = new TipoPagamento(resultSet.getInt("tpg_id"),
+                        resultSet.getString("tpg_nome"));
+                tipoPagamentoList.add(tpg);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return tipoPagamentoList;
+    }
+
+    public List<TipoPagamento> get() {
+        List<TipoPagamento> tipoPagamentoList = new ArrayList<>();
+        String sql = "SELECT * FROM tipo_pagamento";
+        ResultSet resultSet = SingletonDB.getConexao().consultar(sql);
 
         try {
             while(resultSet.next()) {

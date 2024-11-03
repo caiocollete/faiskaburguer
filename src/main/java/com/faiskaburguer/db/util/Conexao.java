@@ -44,7 +44,9 @@ public class Conexao
                 executou=true;
         }
         catch ( SQLException sqlex )
-        {  erro="Erro: "+sqlex.toString();
+        {
+            erro="Erro: "+sqlex.toString();
+            System.out.println(erro);
         }
         return executou;
     }

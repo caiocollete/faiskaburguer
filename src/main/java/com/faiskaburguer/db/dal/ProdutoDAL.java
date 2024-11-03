@@ -1,10 +1,12 @@
 package com.faiskaburguer.db.dal;
 
 import com.faiskaburguer.db.entidade.Produtos;
+import com.faiskaburguer.db.entidade.TipoPagamento;
 import com.faiskaburguer.db.util.SingletonDB;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProdutoDAL implements IDAL <Produtos> {
@@ -17,7 +19,7 @@ public class ProdutoDAL implements IDAL <Produtos> {
                     	VALUES (#1, '#2', '#3', #4, #5);
                 """;
 
-        sql = sql.replace("#1", "" + entidade.getId());
+        sql = sql.replace("#1", "" + SingletonDB.getConexao().getMaxPK("produto","pro_id")+1);
         sql = sql.replace("#2", "" + entidade.getNome());
         sql = sql.replace("#3", "" + entidade.getDescricao());
         sql = sql.replace("#4", "" + entidade.getValor());
@@ -78,6 +80,47 @@ public class ProdutoDAL implements IDAL <Produtos> {
 
     @Override
     public List<Produtos> get(String filtro) {
-        return null;
+        List<Produtos> produtosList = new ArrayList<>();
+        String sql = "SELECT * FROM produto";
+        if(!filtro.isEmpty())
+            sql+= " WHERE "+ filtro;
+        ResultSet resultSet = SingletonDB.getConexao().consultar(sql);
+
+
+        try {
+            while(resultSet.next()) {
+                Produtos produto = new Produtos(resultSet.getInt("pro_id"),
+                        resultSet.getString("pro_nome"),
+                        resultSet.getString("pro_desc"),
+                        resultSet.getDouble("pro_valor"),
+                        new CategoriaDAL().get(resultSet.getInt("cat_id")));
+                produtosList.add(produto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return produtosList;
+    }
+
+    public List<Produtos> get() {
+        List<Produtos> produtosList = new ArrayList<>();
+        String sql = "SELECT * FROM produto";
+        ResultSet resultSet = SingletonDB.getConexao().consultar(sql);
+
+        try {
+            while(resultSet.next()) {
+                Produtos produto = new Produtos(resultSet.getInt("pro_id"),
+                        resultSet.getString("pro_nome"),
+                        resultSet.getString("pro_descr"),
+                        resultSet.getDouble("pro_valor"),
+                        new CategoriaDAL().get(resultSet.getInt("cat_id")));
+                produtosList.add(produto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return produtosList;
     }
 }

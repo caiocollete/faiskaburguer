@@ -3,14 +3,12 @@ package com.faiskaburguer;
 import com.faiskaburguer.db.dal.CategoriaDAL;
 import com.faiskaburguer.db.entidade.Categoria;
 import com.faiskaburguer.db.entidade.Empresa;
+import com.faiskaburguer.db.entidade.Pedido;
 import com.faiskaburguer.db.util.SingletonDB;
 
-public class MainTeste {
-    public static void main(String[] args){
-        if(!SingletonDB.conectar()){
-            System.out.println("ERRO: "+ SingletonDB.getConexao().getMensagemErro());
-        }
-
+public abstract class MainTeste {
+    public void main(String[] args){
+        
         System.out.println("Classe teste");
         Categoria categoria = new Categoria("HAMBURGER");
         CategoriaDAL categoriaDAL = new CategoriaDAL();

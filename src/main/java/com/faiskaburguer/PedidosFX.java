@@ -1,24 +1,33 @@
 package com.faiskaburguer;
 
+import com.faiskaburguer.db.util.SingletonDB;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
-import java.io.IOException;
 
 public class PedidosFX extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(PedidosFX.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+    public void start(Stage stage) throws Exception {
+        Pane root = FXMLLoader.load(getClass().getResource("starts.fxml"));
+        Scene scene = new Scene(root, 600, 400);
+
+        // Adiciona o arquivo CSS
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+
         stage.setScene(scene);
+        stage.setTitle("Faiska Burguer");
         stage.show();
     }
 
     public static void main(String[] args) {
-        //Platform.exit();
+        if(!SingletonDB.conectar()){
+            System.out.println("ERRO: "+ SingletonDB.getConexao().getMensagemErro());
+        }
         launch();
+
     }
 }
