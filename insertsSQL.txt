@@ -1,0 +1,24 @@
+INSERT INTO public.empresa (emp_id, emp_razao, emp_fantasia, emp_cnpj, emp_cep, emp_rua, emp_numero, emp_bairro, emp_cidade, emp_uf, emp_fone, emp_email, emp_vlremb) VALUES
+(1, 'Faiska Burguer LTDA', 'Faiska Burguer', '12.345.678/0001-90', '19000-000', 'Rua das Flores', '123', 'Centro', 'Presidente Venceslau', 'SP', '(18) 1234-5678', 'contato@faiskaburguer.com', 5.00);
+
+INSERT INTO public.tipo_pagamento (tpg_id, tpg_nome) VALUES
+(1, 'Dinheiro'),
+(2, 'Cartão de Crédito'),
+(3, 'Cartão de Débito'),
+INSERT INTO public.pedido (ped_id, ped_data, ped_clinome, ped_clifone, ped_total, ped_viagem, tpg_id) VALUES
+(1, '2024-11-03', 'João Silva', '(18) 9876-5432', 38.00, 'N', 2),
+(2, '2024-11-03', 'Maria Oliveira', '(18) 9123-4567', 25.00, 'S', 1);
+
+INSERT INTO public.item (pro_id, ped_id, it_quant, it_valor) VALUES
+(1, 1, 1, 15.00), -- João Silva, 1 Hambúrguer Clássico
+(3, 1, 1, 8.00), -- João Silva, 1 Batata Frita
+(4, 1, 1, 5.00), -- João Silva, 1 Coca-Cola
+(1, 2, 1, 15.00), -- Maria Oliveira, 1 Hambúrguer Clássico
+(5, 2, 1, 7.00); -- Maria Oliveira, 1 Sorvete(4, 'Pix');
+
+INSERT INTO public.produto (pro_id, pro_nome, pro_descr, pro_valor, pro_foto, cat_id) VALUES
+(1, 'Hambúrguer Clássico', 'Hambúrguer simples com queijo, alface e tomate', 15.00, NULL, 1),
+(2, 'Cheeseburguer', 'Hambúrguer com queijo cheddar', 18.00, NULL, 1),
+(3, 'Batata Frita', 'Porção de batata frita crocante', 8.00, NULL, 1),
+(4, 'Coca-Cola', 'Refrigerante de 350ml', 5.00, NULL, 2),
+(5, 'Sorvete', 'Sorvete de chocolate 100ml', 7.00, NULL, 3);
