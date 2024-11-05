@@ -33,7 +33,7 @@ O FaiskaBurguer é um sistema de pedidos para lanchonetes e restaurantes, que pe
 - `db/entidade`: Modelos de entidade para representar os dados no banco.
 - `db/util`: Para conexão com o banco de dados, utilizando o Padrão de Projeto Singleton.
 - `db/viacep`: Para conexão com a API ViaCep.
-- `views`: Arquivos FXML que definem a interface gráfica.
+- `resources`: Onde se encontra os arquivos FXML que definem a interface gráfica.
 
 ## Instruções de Uso
 
