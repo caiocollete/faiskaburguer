@@ -52,7 +52,3 @@ O FaiskaBurguer é um sistema de pedidos para lanchonetes e restaurantes, que pe
 3. Commit suas alterações (`git commit -am 'Adiciona nova feature'`).
 4. Envie suas alterações para o GitHub (`git push origin feature/sua-feature`).
 5. Abra um Pull Request.
-
-## Problemas Conhecidos
-
-- Ao remover produtos, há um controle de quantidade que ainda está sendo aprimorado para casos de produtos duplicados na lista.
