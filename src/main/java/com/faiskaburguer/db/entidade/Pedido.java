@@ -129,11 +129,31 @@ public class Pedido {
         return listItens;
     }
 
-    double tot=0;
+
     public void totalizar(){
+        double tot=0;
         for(Item item: listItens){
             tot+=item.valor()* item.quant();
         }
         this.total=tot;
+    }
+
+    @Override
+    public String toString() {
+        String txt = "Pedido #"+id+"{" + "\n" +
+                "\tData = " + data.toString() + "\n" +
+                "\tNome do cliente = " + clinome + "\n" +
+                "\tTelefone do cliente = " + clifone + "\n" +
+                "\tTotal do pedido = " + total + "\n" +
+                "\tViagem = " + viagem + "\n"+
+                "\tTipo de Pagamento = " + tipoPagamento.getNome() + "\n" +
+                "\tLista de Itens = " + listItens + "\n";
+
+        if(endereco!=null){
+            txt += "\tEndereço =" + endereco.toString() + "\n" + "}";
+        }
+        else txt += "}";
+
+        return txt;
     }
 }

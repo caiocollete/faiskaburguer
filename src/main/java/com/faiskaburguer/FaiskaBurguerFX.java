@@ -6,10 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 
-public class PedidosFX extends Application {
+public class FaiskaBurguerFX extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Pane root = FXMLLoader.load(getClass().getResource("starts.fxml"));
