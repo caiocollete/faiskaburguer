@@ -1,29 +1,34 @@
 package com.faiskaburguer.db.entidade;
 
 import com.faiskaburguer.db.viacep.ConsultaCEP;
-import com.faiskaburguer.db.viacep.Endereco;
+import com.faiskaburguer.db.viacep.EnderecoRecordAPI;
 
 public class Empresa {
     private int emp_id;
     private String emp_razao;
     private String emp_fantasia;
     private String emp_cnpj;
-    private String emp_cep;
-    private String emp_numero;
     public Endereco endereco;
     private String emp_fone;
     private String emp_email;
     private Double emp_vlremb;
 
 
-    public Empresa(int emp_id, String emp_razao, String emp_fantasia, String emp_cnpj, String emp_cep, String emp_numero, String emp_fone, String emp_email, Double emp_vlremb) {
+    public Empresa(String emp_razao, String emp_fantasia, String emp_cnpj, Endereco endereco, String emp_fone, String emp_email, Double emp_vlremb) {
+        this.emp_razao = emp_razao;
+        this.emp_fantasia = emp_fantasia;
+        this.emp_cnpj = emp_cnpj;
+        this.endereco = endereco;
+        this.emp_fone = emp_fone;
+        this.emp_email = emp_email;
+        this.emp_vlremb = emp_vlremb;
+    }
+
+    public Empresa(int emp_id, String emp_razao, String emp_fantasia, String emp_cnpj, String emp_fone, String emp_email, Double emp_vlremb) {
         this.emp_id = emp_id;
         this.emp_razao = emp_razao;
         this.emp_fantasia = emp_fantasia;
         this.emp_cnpj = emp_cnpj;
-        this.emp_cep = emp_cep;
-        this.endereco = ConsultaCEP.consulta(emp_cep);
-        this.emp_numero = emp_numero;
         this.emp_fone = emp_fone;
         this.emp_email = emp_email;
         this.emp_vlremb = emp_vlremb;
@@ -61,23 +66,6 @@ public class Empresa {
         this.emp_cnpj = emp_cnpj;
     }
 
-    public String getEmp_cep() {
-        return emp_cep;
-    }
-
-    public void setEmp_cep(String emp_cep) {
-        this.emp_cep = emp_cep;
-        this.endereco = ConsultaCEP.consulta(emp_cep);
-    }
-
-    public String getEmp_numero() {
-        return emp_numero;
-    }
-
-    public void setEmp_numero(String emp_numero) {
-        this.emp_numero = emp_numero;
-    }
-
     public Endereco getEndereco() {
         return endereco;
     }
@@ -104,5 +92,9 @@ public class Empresa {
 
     public void setEmp_vlremb(Double emp_vlremb) {
         this.emp_vlremb = emp_vlremb;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco= endereco;
     }
 }

@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.faiskaburguer.controllers.CtrlPedido">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.faiskaburguer.controllers.cadastros.CtrlPedido">
    <center>
-      <Pane maxHeight="370.0" maxWidth="600.0" minHeight="370.0" minWidth="600.0" prefHeight="370.0" prefWidth="600.0" stylesheets="@style.css" BorderPane.alignment="CENTER">
+      <Pane maxHeight="370.0" maxWidth="600.0" minHeight="370.0" minWidth="600.0" prefHeight="370.0" prefWidth="600.0" stylesheets="@../style.css" BorderPane.alignment="CENTER">
          <children>
             <TextField fx:id="nome_cliente" layoutX="57.0" layoutY="70.0" />
             <Text layoutX="58.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome Cliente" />
@@ -29,6 +29,7 @@
             <TextField fx:id="rua" disable="true" layoutX="55.0" layoutY="254.0" promptText="Rua" />
             <TextField fx:id="cep" disable="true" layoutX="56.0" layoutY="291.0" promptText="CEP" />
             <TextField fx:id="numero_casa" disable="true" layoutX="213.0" layoutY="254.0" prefHeight="27.0" prefWidth="41.0" promptText="N°" />
+            <Button fx:id="remover" layoutX="521.0" layoutY="52.0" mnemonicParsing="false" onAction="#RemoverProduto" text="Remover" />
          </children>
       </Pane>
    </center>

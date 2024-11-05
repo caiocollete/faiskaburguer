@@ -49,23 +49,23 @@ public class ProdutoDAL implements IDAL <Produtos> {
 
     @Override
     public boolean apagar(Produtos entidade) {
-        return SingletonDB.getConexao().manipular("DELETE FROM produto WHERE prod_id=" + entidade.getId());
+        return SingletonDB.getConexao().manipular("DELETE FROM produto WHERE pro_id=" + entidade.getId());
     }
 
     @Override
     public Produtos get(int id) {
         Produtos produto = null;
-        String sql = "SELECT * FROM produto WHERE prod_id=" + id;
+        String sql = "SELECT * FROM produto WHERE pro_id=" + id;
         ResultSet resultSet = SingletonDB.getConexao().consultar(sql);
 
 
         try {
             if (resultSet.next()) {
                 CategoriaDAL catDAL = new CategoriaDAL();
-                produto = new Produtos(resultSet.getInt("prod_id"),
-                        resultSet.getString("prod_nome"),
-                        resultSet.getString("prod_desc"),
-                        resultSet.getDouble("prod_valor"),
+                produto = new Produtos(resultSet.getInt("pro_id"),
+                        resultSet.getString("pro_nome"),
+                        resultSet.getString("pro_descr"),
+                        resultSet.getDouble("pro_valor"),
                         catDAL.get(resultSet.getInt("cat_id"))
 
                 );

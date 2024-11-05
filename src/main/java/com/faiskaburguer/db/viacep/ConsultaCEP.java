@@ -9,7 +9,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class ConsultaCEP {
-    public static Endereco consulta(String cep) {
+    public static EnderecoRecordAPI consulta(String cep) {
         URI address = URI.create("https://viacep.com.br/ws/" + cep + "/json/");
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -32,7 +32,7 @@ public class ConsultaCEP {
             String uf = jsonObject.get("uf").getAsString();
 
             // Retornando o Endereço diretamente
-            return new Endereco(cepStr, logradouro, bairro, localidade, uf);
+            return new EnderecoRecordAPI(cepStr, logradouro, bairro, localidade, uf);
 
         } catch (Exception e) {
             throw new RuntimeException("CEP inválido ou erro na consulta");

@@ -1,5 +1,6 @@
 package com.faiskaburguer.db.dal;
 
+import com.faiskaburguer.db.entidade.Endereco;
 import com.faiskaburguer.db.entidade.Pedido;
 import com.faiskaburguer.db.entidade.Produtos;
 import com.faiskaburguer.db.util.SingletonDB;
@@ -13,9 +14,15 @@ public class PedidoDAL implements IDAL <Pedido>{
     @Override
     public boolean gravar(Pedido entidade) {
         boolean erro = false;
+
+        if(entidade.getEndereco().getCep()!=null){
+            EnderecoDAL enderecoDAL = new EnderecoDAL();
+            enderecoDAL.gravar(entidade.getEndereco());
+        }
+
         String sqlPedido = """ 
-                    INSERT INTO pedido (ped_data, ped_clinome, ped_clifone, ped_total, ped_viagem, tpg_id, ped_id)
-                    VALUES ('#1', '#2', '#3', '#4', '#5', #6, #7);
+                    INSERT INTO pedido (ped_data, ped_clinome, ped_clifone, ped_total, ped_viagem, tpg_id, ped_id, end_id)
+                    VALUES ('#1', '#2', '#3', '#4', '#5', #6, #7, #8);
                     """;
         sqlPedido = sqlPedido.replace("#1",entidade.getData().toString());
         sqlPedido = sqlPedido.replace("#2",entidade.getClinome());
@@ -24,6 +31,7 @@ public class PedidoDAL implements IDAL <Pedido>{
         sqlPedido = sqlPedido.replace("#5",""+entidade.getViagem());
         sqlPedido = sqlPedido.replace("#6",""+entidade.getTipoPagamento().getId());
         sqlPedido = sqlPedido.replace("#7",""+(SingletonDB.getConexao().getMaxPK("pedido","ped_id")+1));
+        sqlPedido = sqlPedido.replace("#8",""+ SingletonDB.getConexao().getMaxPK("endereco","end_id"));
         if (SingletonDB.getConexao().manipular(sqlPedido)) {
             int id= SingletonDB.getConexao().getMaxPK("pedido","ped_id");
                 for(Pedido.Item item : entidade.getItens()){
@@ -85,6 +93,7 @@ public class PedidoDAL implements IDAL <Pedido>{
     @Override
     public boolean apagar(Pedido entidade) {
         SingletonDB.getConexao().manipular("DELETE FROM item WHERE ped_id="+entidade.getId());
+        SingletonDB.getConexao().manipular("DELETE FROM endereco WHERE end_id="+entidade.getEndereco().getId());
         return SingletonDB.getConexao().manipular("DELETE FROM pedido WHERE ped_id="+entidade.getId());
     }
 
@@ -102,6 +111,8 @@ public class PedidoDAL implements IDAL <Pedido>{
                         resultSet.getDouble("ped_total"),
                         resultSet.getString("ped_viagem").charAt(0),
                         new TipoPagamentoDAL().get(resultSet.getInt("tpg_id")));
+                Endereco endereco = new EnderecoDAL().get(resultSet.getInt("end_id"));
+                pedido.setEndereco(endereco);
 
                 String sql2 = "SELECT * FROM item WHERE ped_id="+pedido.getId();
                 ResultSet resultSet2 = SingletonDB.getConexao().consultar(sql2);
@@ -137,12 +148,14 @@ public class PedidoDAL implements IDAL <Pedido>{
                         resultSet.getDouble("ped_total"),
                         resultSet.getString("ped_viagem").charAt(0),
                         new TipoPagamentoDAL().get(resultSet.getInt("tpg_id")));
+                Endereco endereco = new EnderecoDAL().get(resultSet.getInt("end_id"));
+                pedido.setEndereco(endereco);
                 pedidoList.add(pedido);
 
                 String sql2 = "SELECT * FROM item WHERE ped_id="+pedido.getId();
                 ResultSet resultSet2 = SingletonDB.getConexao().consultar(sql2);
                 while(resultSet2.next()){
-                    Produtos produtos = new ProdutoDAL().get(resultSet2.getInt("prod_id"));
+                    Produtos produtos = new ProdutoDAL().get(resultSet2.getInt("pro_id"));
                     produtos.setValor(resultSet2.getDouble("it_valor"));
                     pedido.addItem(produtos,resultSet2.getInt("it_quant"));
                 }

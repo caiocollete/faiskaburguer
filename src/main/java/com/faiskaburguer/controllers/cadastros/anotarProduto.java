@@ -1,16 +1,12 @@
-package com.faiskaburguer.controllers;
+package com.faiskaburguer.controllers.cadastros;
 
 import com.faiskaburguer.db.dal.CategoriaDAL;
 import com.faiskaburguer.db.dal.ProdutoDAL;
-import com.faiskaburguer.db.dal.TipoPagamentoDAL;
 import com.faiskaburguer.db.entidade.Categoria;
-import com.faiskaburguer.db.entidade.Pedido;
 import com.faiskaburguer.db.entidade.Produtos;
-import com.faiskaburguer.db.entidade.TipoPagamento;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class anotarProduto {

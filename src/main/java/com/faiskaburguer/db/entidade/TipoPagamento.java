@@ -9,9 +9,8 @@ public class TipoPagamento {
         this.id=id;
         this.nome=nome;
     }
-    public TipoPagamento(int id){
-        this.id=id;
-        this.nome="";
+    public TipoPagamento(String nome){
+        this.nome=nome;
     }
     public String getNome() {
         return nome;

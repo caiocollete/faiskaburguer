@@ -11,4 +11,8 @@ module com.caiovini.faiskaburguer {
     exports com.faiskaburguer;
     exports com.faiskaburguer.controllers;
     opens com.faiskaburguer.controllers to javafx.fxml;
+    exports com.faiskaburguer.controllers.cadastros;
+    opens com.faiskaburguer.controllers.cadastros to javafx.fxml;
+    exports com.faiskaburguer.controllers.relatorios;
+    opens com.faiskaburguer.controllers.relatorios to javafx.fxml;
 }

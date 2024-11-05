@@ -1,12 +1,12 @@
-package com.faiskaburguer.controllers;
+package com.faiskaburguer.controllers.cadastros;
 
 import com.faiskaburguer.db.dal.PedidoDAL;
 import com.faiskaburguer.db.dal.ProdutoDAL;
 import com.faiskaburguer.db.dal.TipoPagamentoDAL;
+import com.faiskaburguer.db.entidade.Endereco;
 import com.faiskaburguer.db.entidade.Pedido;
 import com.faiskaburguer.db.entidade.Produtos;
 import com.faiskaburguer.db.entidade.TipoPagamento;
-import com.faiskaburguer.db.util.SingletonDB;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -62,21 +62,37 @@ public class CtrlPedido {
             MenuItem menuItem = new MenuItem(produto.getNome());
             selectionProds.getItems().add(menuItem);
 
-            // When a MenuItem is clicked, add it to the ListView
+            // When a MenuItem is clicked, add it to the ListVie
             menuItem.setOnAction(event -> {
+                // Adiciona o produto ao ListView, permitindo duplicatas
                 listSelectionProds.getItems().add(produto.getNome());
-                this.listItens.add(new Pedido.Item(produto, retornaQuantidade(produto), produto.getValor()));
-                this.produtosSelecionados.add(produto);
+                produtosSelecionados.add(produto);
 
-                System.out.println("Produto selecionado adicionado: " + produto.getNome());
+                // Verifica se o produto já está na lista de itens do pedido
+                boolean itemExiste = false;
+                for (int i = 0; i < listItens.size(); i++) {
+                    Pedido.Item item = listItens.get(i);
+                    if (item.produtos().equals(produto)) {
+                        // Cria um novo item com quantidade incrementada
+                        Pedido.Item itemAtualizado = new Pedido.Item(produto, item.quant() + 1, produto.getValor());
+                        listItens.set(i, itemAtualizado);
+                        itemExiste = true;
+                        break;
+                    }
+                }
+                // Se o produto não está na lista, adiciona como novo
+                if (!itemExiste) {
+                    Pedido.Item novoItem = new Pedido.Item(produto, 1, produto.getValor());
+                    listItens.add(novoItem);
+                }
 
-                String total = total_pedido.getText();
-                total = total.replace("R$", "").trim().replace(",", ".");
-                Double totalDouble = Double.parseDouble(total);
-                totalDouble+=produto.getValor();
-                total = "R$"+String.format("%.2f", totalDouble);
-                total_pedido.setText(total);
+
+                // Atualiza o total do pedido
+                Double totalDouble = Double.parseDouble(total_pedido.getText().replace("R$", "").trim().replace(",", "."));
+                totalDouble += produto.getValor();
+                total_pedido.setText("R$" + String.format("%.2f", totalDouble));
             });
+
         }
 
         for(TipoPagamento tpgtObj : tipoPagamentosList){
@@ -130,16 +146,16 @@ public class CtrlPedido {
                 String nomeCliente = nome_cliente.getText();
                 String numeroCliente = numero_cliente.getText();
                 char viagem = 'N';
-                if(viagem_check.isSelected()) viagem = 'S';
+                Pedido pedido;
+                if(viagem_check.isSelected()){
+                    viagem = 'S';
+                     pedido = new Pedido(LocalDate.now(),nomeCliente,numeroCliente, finalTotalDouble,viagem,tipoPagamento,listItens, new Endereco(cep.getText(),rua.getText(),numero_casa.getText()));
+                }
+                else{
+                    pedido = new Pedido(LocalDate.now(),nomeCliente,numeroCliente, finalTotalDouble,viagem,tipoPagamento,listItens);
+                }
 
                 System.out.println("Salvando pedido...");
-                System.out.println("Cliente: " + nomeCliente);
-                System.out.println("Número: " + numeroCliente);
-                System.out.println("Viagem: " + viagem);
-                System.out.println("Produtos Selecionados: " + this.produtosSelecionados);
-                System.out.println("Total do pedido: " + finalTotal);
-
-                Pedido pedido = new Pedido(LocalDate.now(),nomeCliente,numeroCliente, finalTotalDouble,viagem,tipoPagamento,listItens);
 
                 // Armazena no db
                 PedidoDAL pedidodal = new PedidoDAL();
@@ -161,5 +177,47 @@ public class CtrlPedido {
         rua.setDisable(!viagem_check.isSelected());
         numero_casa.setDisable(!viagem_check.isSelected());
         cep.setDisable(!viagem_check.isSelected());
+    }
+
+    @FXML
+    protected void RemoverProduto() {
+        // Verifica se há um item selecionado
+        int index = listSelectionProds.getSelectionModel().getSelectedIndex();
+        if (index >= 0) {
+            // Remove a entrada selecionada no ListView
+            listSelectionProds.getItems().remove(index);
+
+            Produtos produtoRemover = produtosSelecionados.get(index);
+
+            // Remove o produto de produtosSelecionados
+            produtosSelecionados.remove(index);
+
+            // Atualiza a quantidade ou remove da lista `listItens`
+            for (int i = 0; i < listItens.size(); i++) {
+                Pedido.Item item = listItens.get(i);
+                if (item.produtos().equals(produtoRemover)) {
+                    if (item.quant() > 1) {
+                        // Atualiza o item com quantidade decrementada
+                        Pedido.Item itemAtualizado = new Pedido.Item(produtoRemover, item.quant() - 1, item.valor());
+                        listItens.set(i, itemAtualizado);
+                    } else {
+                        // Remove o item se a quantidade for 1
+                        listItens.remove(i);
+                    }
+                    break;
+                }
+            }
+
+            // Atualiza o total do pedido
+            Double totalDouble = Double.parseDouble(total_pedido.getText().replace("R$", "").trim().replace(",", "."));
+            totalDouble -= produtoRemover.getValor();
+            total_pedido.setText("R$" + String.format("%.2f", totalDouble));
+        } else {
+            System.out.println("Nenhum produto selecionado ou índice inválido.");
+        }
+
+        System.out.println(listSelectionProds.toString());
+        System.out.println(produtosSelecionados.toString()); // DIMINUIR UM PRODUTO
+        System.out.println(listItens.toString()); // ESTA INSERINDO DUPLICADO
     }
 }

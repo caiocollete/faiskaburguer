@@ -13,7 +13,7 @@ Gera um .json com as infomacoes do endereco
 
 
 public class gerador {
-    public static void salveJson(Endereco endereco) throws IOException {
+    public static void salveJson(EnderecoRecordAPI endereco) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         FileWriter esc = new FileWriter(endereco.cep()+".json");
         esc.write(gson.toJson(endereco));

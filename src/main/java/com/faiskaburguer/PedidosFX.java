@@ -20,6 +20,7 @@ public class PedidosFX extends Application {
 
         stage.setScene(scene);
         stage.setTitle("Faiska Burguer");
+        stage.setMaximized(true);
         stage.show();
     }
 

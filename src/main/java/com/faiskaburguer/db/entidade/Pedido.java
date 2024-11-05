@@ -6,7 +6,9 @@ import java.util.List;
 
 public class Pedido {
 
-    public static record Item(Produtos produtos, int quant, double valor){}
+    public static Pedido.Item Item;
+
+    public record Item(Produtos produtos, int quant, double valor){}
     private int id;
     private LocalDate data;
     private String clinome;
@@ -15,11 +17,12 @@ public class Pedido {
     private char viagem; // S || N
     private TipoPagamento tipoPagamento;
     private List<Item> listItens;
+    private Endereco endereco;
 
+    public Pedido() {}
 
     // usa para criar o pedido
-    public Pedido(LocalDate data, String clinome, String clifone, double total, char viagem, TipoPagamento tipoPagamento, List<Item> listItens) {
-        this.id=0;
+    public Pedido(LocalDate data, String clinome, String clifone, double total, char viagem, TipoPagamento tipoPagamento, List<Item> listItens, Endereco endereco) {
         this.data = data;
         this.clinome = clinome;
         this.clifone = clifone;
@@ -27,6 +30,7 @@ public class Pedido {
         this.viagem = viagem;
         this.tipoPagamento = tipoPagamento;
         this.listItens = listItens;
+        this.endereco = endereco;
     }
 
     // usa para resgatar o pedido do db
@@ -38,6 +42,25 @@ public class Pedido {
         this.total = total;
         this.viagem = viagem;
         this.tipoPagamento = tipoPagamento;
+        this.listItens = new ArrayList<>();
+    }
+
+    public Pedido(LocalDate now, String nomeCliente, String numeroCliente, Double finalTotalDouble, char viagem, TipoPagamento tipoPagamento, List<Item> listItens) {
+        this.data = data;
+        this.clinome = clinome;
+        this.clifone = clifone;
+        this.total = total;
+        this.viagem = viagem;
+        this.tipoPagamento = tipoPagamento;
+        this.listItens = listItens;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     public int getId() {
