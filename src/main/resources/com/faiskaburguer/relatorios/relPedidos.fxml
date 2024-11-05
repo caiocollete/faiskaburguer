@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -9,7 +10,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
-
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="593.0" prefWidth="744.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.faiskaburguer.controllers.relatorios.relPedidos">
    <top>
@@ -47,6 +47,7 @@
             <Text layoutX="294.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Produtos no pedido:" />
             <TextField fx:id="bairro" editable="false" layoutX="293.0" layoutY="222.0" prefHeight="25.0" prefWidth="313.0" />
             <Text layoutX="294.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bairro:" />
+            <CheckBox disable="true" layoutX="620.0" layoutY="226.0" mnemonicParsing="false" text="Viagem" />
          </children>
       </Pane>
    </right>

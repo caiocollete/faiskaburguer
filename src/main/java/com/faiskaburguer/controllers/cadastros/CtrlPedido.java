@@ -53,7 +53,8 @@ public class CtrlPedido {
     private List<Pedido.Item> listItens = new ArrayList<>();
     private TipoPagamento tipoPagamento;
 
-    public void initialize() {
+    @FXML
+    protected void initialize() {
         List<Produtos> produtosList = new ProdutoDAL().get();
         List<TipoPagamento> tipoPagamentosList = new TipoPagamentoDAL().get();
 
@@ -104,16 +105,6 @@ public class CtrlPedido {
                 selectionTipoPagamento.setText(tpgtObj.getNome());
             });
         }
-    }
-
-    private int retornaQuantidade(Produtos produto) {
-        int quant=1;
-        if(this.produtosSelecionados.contains(produto)){
-            for(Produtos obj : this.produtosSelecionados)
-                if(obj.equals(produto))
-                    quant++;
-        }
-        return quant;
     }
 
     @FXML

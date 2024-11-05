@@ -32,7 +32,8 @@ public class anotarProduto {
 
     public Categoria categoria;
 
-    public void initialize() {
+    @FXML
+    protected void initialize() {
         atualizaListaProdutos();
 
         List<Categoria> categoriaList = new CategoriaDAL().get();
@@ -47,7 +48,8 @@ public class anotarProduto {
         }
     }
 
-    public void anotar() {
+    @FXML
+    protected void anotar() {
         System.out.println(nome_produto.getText());
         System.out.println(descr_produto.getText());
         System.out.println(Double.parseDouble(valor_produto.getText()));

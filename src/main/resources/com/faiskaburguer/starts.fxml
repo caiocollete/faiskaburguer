@@ -6,14 +6,15 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="500.0" prefWidth="742.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.faiskaburguer.controllers.mainController">
+<BorderPane prefHeight="500.0" prefWidth="742.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.faiskaburguer.controllers.mainController">
    <center>
       <Pane maxHeight="300.0" maxWidth="500.0" minHeight="300.0" minWidth="500.0" prefHeight="300.0" prefWidth="500.0" stylesheets="@style.css" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="305.0" fitWidth="316.0" layoutX="-31.0" layoutY="-20.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="300.0" fitWidth="354.0" layoutX="100.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@img/faiskaburguer_logo.png" />
                </image>
@@ -21,24 +22,21 @@
          </children>
       </Pane>
    </center>
-   <left>
-      <VBox alignment="CENTER" prefHeight="500.0" prefWidth="176.0" BorderPane.alignment="CENTER" />
-   </left>
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="Cadastros">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#ControlePedido" text="Cadastrar Pedido" />
-                  <MenuItem mnemonicParsing="false" onAction="#AnotarProdutos" text="Cadastrar Produto" />
-                  <MenuItem mnemonicParsing="false" onAction="#CadastrarEmpresa" text="Cadastrar Empresa" />
-                  <MenuItem mnemonicParsing="false" onAction="#CadastrarTipoPagamento" text="Cadastrar Tipo Pagamento" />
-                  <MenuItem mnemonicParsing="false" onAction="#CadastrarCategoria" text="Cadastrar Categoria" />
+              <MenuItem mnemonicParsing="false" onAction="#ControlePedido" text="Pedido" />
+                  <MenuItem mnemonicParsing="false" onAction="#AnotarProdutos" text="Produto" />
+                  <MenuItem mnemonicParsing="false" onAction="#CadastrarEmpresa" text="Empresa" />
+                  <MenuItem mnemonicParsing="false" onAction="#CadastrarTipoPagamento" text="Tipo Pagamento" />
+                  <MenuItem mnemonicParsing="false" onAction="#CadastrarCategoria" text="Categoria" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Relatórios">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#RelatorioPedidos" text="Relatório Pedidos" />
+              <MenuItem mnemonicParsing="false" onAction="#RelatorioPedidos" text="Pedidos" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Ajuda">
@@ -49,4 +47,11 @@
         </menus>
       </MenuBar>
    </top>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="30.0" prefWidth="742.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Faiska Burguer System" />
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>

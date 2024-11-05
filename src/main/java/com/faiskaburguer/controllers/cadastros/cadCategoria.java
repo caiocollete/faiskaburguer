@@ -10,6 +10,7 @@ public class cadCategoria {
 
     @FXML
     private TextField cat_nome;
+
     @FXML
     protected void CadastrarCategoria(){
         CategoriaDAL categoriaDAL = new CategoriaDAL();

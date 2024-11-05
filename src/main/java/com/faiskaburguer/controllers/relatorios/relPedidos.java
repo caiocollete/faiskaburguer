@@ -4,6 +4,7 @@ import com.faiskaburguer.db.dal.PedidoDAL;
 import com.faiskaburguer.db.entidade.Pedido;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
@@ -30,6 +31,8 @@ public class relPedidos {
     private TextField uf;
     @FXML
     private TextField bairro;
+    @FXML
+    private CheckBox viagem;
 
     private List<Pedido> pedidoList;
 
@@ -43,5 +46,19 @@ public class relPedidos {
     }
 
     public void BuscarPedidos(ActionEvent event) {
+        int idx = pedidosSistema.getSelectionModel().getSelectedIndices().get(0);
+        Pedido pedido = pedidoList.get(idx);
+
+        nome.setText(pedido.getClinome());
+        telefone.setText(pedido.getClifone());
+        if(pedido.getViagem()){
+            viagem.setSelected(true);
+            rua.setText(pedido.getEndereco().getRua());
+            numero.setText(pedido.getEndereco().getNumero());
+            cidade.setText(pedido.getEndereco().getCidade());
+            uf.setText(pedido.getEndereco().getUf());
+            bairro.setText(pedido.getEndereco().getBairro());
+        }
+
     }
 }

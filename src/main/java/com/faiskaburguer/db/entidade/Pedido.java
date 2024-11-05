@@ -103,8 +103,10 @@ public class Pedido {
         this.total = total;
     }
 
-    public char getViagem() {
-        return viagem;
+    public boolean getViagem() {
+        if (viagem=='S')
+            return true;
+        else return false;
     }
 
     public void setViagem(char viagem) {

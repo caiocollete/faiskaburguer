@@ -45,10 +45,6 @@ O FaiskaBurguer é um sistema de pedidos para lanchonetes e restaurantes, que pe
    - Marque a opção "para viagem" se o pedido for de entrega, o que adicionará uma taxa ao total.
 3. **Finalizar Pedido**: Após confirmar o pedido, ele será salvo no banco de dados, e a interface será resetada para novos pedidos.
 
-## Sobre as branchs
-
-  - Estou estudando sobre a modificação dos endereços, passando eles para uma classe separada no codigo e uma tabela separada no banco de dados, por isso há a branch `enderecosSeparados`.
-
 ## Contribuição
 
 1. Faça um fork do projeto.

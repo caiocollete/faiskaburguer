@@ -15,7 +15,7 @@ public class PedidoDAL implements IDAL <Pedido>{
     public boolean gravar(Pedido entidade) {
         boolean erro = false;
 
-        if(entidade.getEndereco().getCep()!=null){
+        if(entidade.getViagem()){
             EnderecoDAL enderecoDAL = new EnderecoDAL();
             enderecoDAL.gravar(entidade.getEndereco());
         }
