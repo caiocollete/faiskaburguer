@@ -28,6 +28,5 @@ public class FaiskaBurguerFX extends Application {
             System.out.println("ERRO: "+ SingletonDB.getConexao().getMensagemErro());
         }
         launch();
-
     }
 }

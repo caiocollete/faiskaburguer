@@ -34,6 +34,11 @@
                   <MenuItem mnemonicParsing="false" onAction="#CadastrarCategoria" text="Categoria" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Gerenciar">
+               <items>
+                <MenuItem mnemonicParsing="false" onAction="#gerenciarProdutos" text="Produtos" />
+               </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Relatórios">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#RelatorioPedidos" text="Pedidos" />
@@ -41,7 +46,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Ajuda">
             <items>
-              <MenuItem mnemonicParsing="false" text="Contate-nos" />
+              <MenuItem mnemonicParsing="false" onAction="#Ajuda" text="Sobre" />
             </items>
           </Menu>
         </menus>

@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -82,6 +83,20 @@ public class mainController {
         stage.show();
     }
 
+    public void gerenciarProdutos(ActionEvent actionEvent) throws IOException {
+        // Carrega o novo FXML
+        Parent novaTelaRoot = FXMLLoader.load(getClass().getResource("/com/faiskaburguer/gerenciadores/gerenciarProdutos.fxml"));
+
+        // Cria a nova cena
+        Scene novaTelaScene = new Scene(novaTelaRoot);
+
+        // Obtém o Stage atual (janela) e configura a nova cena
+        Stage stage = new Stage();
+        stage.setTitle("Gerenciamento de Produtos");
+        stage.setScene(novaTelaScene);
+        stage.show();
+    }
+
     @FXML
     protected void RelatorioPedidos(ActionEvent event) throws IOException {
         // Carrega o novo FXML
@@ -95,5 +110,16 @@ public class mainController {
         stage.setTitle("Relatório de Pedidos");
         stage.setScene(novaTelaScene);
         stage.show();
+    }
+
+
+    public void Ajuda(ActionEvent actionEvent) {
+        //ImageView imageView = new ImageView(new Image(getClass().getResource("/com/faiskaburguer/img/faiskaburguer_logo.png").toExternalForm()));
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Sobre");
+        alert.setHeaderText("Faiska Burguer");
+        //alert.setGraphic(imageView);
+        alert.setContentText("Desenvolvido por Caio Collete\n");
+        alert.show();
     }
 }

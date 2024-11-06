@@ -4,9 +4,11 @@ import com.faiskaburguer.db.dal.CategoriaDAL;
 import com.faiskaburguer.db.dal.ProdutoDAL;
 import com.faiskaburguer.db.entidade.Categoria;
 import com.faiskaburguer.db.entidade.Produtos;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class anotarProduto {
@@ -29,6 +31,9 @@ public class anotarProduto {
 
     @FXML
     private ListView<String> listaProdutosNoSistema;
+
+    @FXML
+    private TextField filtro;
 
     public Categoria categoria;
 
@@ -61,15 +66,32 @@ public class anotarProduto {
             System.out.println("done");
         }
 
-        listaProdutosNoSistema.getItems().clear();
         atualizaListaProdutos();
     }
 
     private void atualizaListaProdutos() {
-        List<Produtos> produtosList = new ProdutoDAL().get();
+        List<Produtos> produtosList = new ProdutoDAL().get("");
 
+        listaProdutosNoSistema.getItems().clear();
         for (Produtos produto : produtosList) {
             listaProdutosNoSistema.getItems().add(produto.getNome());
         }
+    }
+
+    public void Pesquisar(ActionEvent actionEvent) {
+        List<String> aux = new ArrayList<>();
+        if(!filtro.getText().isEmpty()){
+            for(String s: listaProdutosNoSistema.getItems()){
+                if (s.toLowerCase().contains(filtro.getText().toLowerCase())) {
+                    aux.add(s);
+                }
+            }
+
+            listaProdutosNoSistema.getItems().clear();
+            for(String s : aux){
+                listaProdutosNoSistema.getItems().add(s);
+            }
+        }
+        else atualizaListaProdutos();
     }
 }

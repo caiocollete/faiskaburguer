@@ -55,7 +55,7 @@ public class CtrlPedido {
 
     @FXML
     protected void initialize() {
-        List<Produtos> produtosList = new ProdutoDAL().get();
+        List<Produtos> produtosList = new ProdutoDAL().get("");
         List<TipoPagamento> tipoPagamentosList = new TipoPagamentoDAL().get();
 
         // Populate the MenuButton with product items

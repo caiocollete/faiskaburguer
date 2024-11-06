@@ -1,4 +1,4 @@
-module com.caiovini.faiskaburguer {
+module com.faiskaburguer {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.net.http;
@@ -13,6 +13,10 @@ module com.caiovini.faiskaburguer {
     opens com.faiskaburguer.controllers to javafx.fxml;
     exports com.faiskaburguer.controllers.cadastros;
     opens com.faiskaburguer.controllers.cadastros to javafx.fxml;
+    exports com.faiskaburguer.controllers.gerenciadores;
+    opens com.faiskaburguer.controllers.gerenciadores to javafx.fxml;
     exports com.faiskaburguer.controllers.relatorios;
     opens com.faiskaburguer.controllers.relatorios to javafx.fxml;
+    exports com.faiskaburguer.db.entidade;
+    opens com.faiskaburguer.db.entidade to javafx.fxml;
 }
