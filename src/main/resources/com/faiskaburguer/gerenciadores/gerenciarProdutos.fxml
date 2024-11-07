@@ -15,7 +15,11 @@
       <HBox alignment="CENTER_LEFT" prefHeight="63.0" prefWidth="600.0" spacing="10.0">
          <children>
             <TextField fx:id="filtro" prefHeight="25.0" prefWidth="315.0" />
-            <Button mnemonicParsing="false" onAction="#Pesquisar" prefHeight="25.0" prefWidth="69.0" text="Buscar" />
+            <Button mnemonicParsing="false" onAction="#Pesquisar" prefHeight="25.0" prefWidth="69.0" text="Buscar">
+               <HBox.margin>
+                  <Insets right="350.0" />
+               </HBox.margin></Button>
+            <Button mnemonicParsing="false" onAction="#Atualizar" text="Atualizar" />
          </children>
          <padding>
             <Insets left="10.0" />

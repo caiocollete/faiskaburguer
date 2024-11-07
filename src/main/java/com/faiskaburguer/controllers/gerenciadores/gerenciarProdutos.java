@@ -35,20 +35,22 @@ public class gerenciarProdutos {
     @FXML
     protected void initialize() {
         initTable();
-        Pesquisar(new ActionEvent());
+        Atualizar(new ActionEvent());
     }
 
     @FXML
     protected void Pesquisar(ActionEvent actionEvent) {
         ProdutoDAL produtoDAL = new ProdutoDAL();
         if (!filtro.getText().isEmpty()){
-            this.produtosShowing = FXCollections.observableArrayList(produtoDAL.get("pro_nome="+"'" + filtro.getText() + "'"));
+            atualizaListaProdutos(produtoDAL.get("pro_nome="+"'" + filtro.getText() + "'"));
         }
+    }
 
-        else
-            this.produtosShowing = FXCollections.observableArrayList(produtoDAL.get(""));
+    @FXML
+    protected void Atualizar(ActionEvent actionEvent) {
+        ProdutoDAL produtoDAL = new ProdutoDAL();
+        atualizaListaProdutos(produtoDAL.get(""));
 
-        atualizaListaProdutos();
     }
 
 
@@ -57,7 +59,8 @@ public class gerenciarProdutos {
         cat_column.setCellValueFactory(new PropertyValueFactory<>("categoria"));
         valor_column.setCellValueFactory(new PropertyValueFactory<>("valor"));
     }
-    private void atualizaListaProdutos() {
+    private void atualizaListaProdutos(List<Produtos> produtosList) {
+        produtosShowing = FXCollections.observableArrayList(produtosList);
         tabelaProdutos.setItems(produtosShowing);
     }
 
