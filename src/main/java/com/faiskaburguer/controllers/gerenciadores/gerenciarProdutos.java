@@ -1,14 +1,20 @@
 package com.faiskaburguer.controllers.gerenciadores;
 
+import com.faiskaburguer.controllers.gerenciadores.editores.EditarProduto;
 import com.faiskaburguer.db.dal.ProdutoDAL;
 import com.faiskaburguer.db.entidade.Produtos;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.List;
 
 public class gerenciarProdutos {
@@ -78,7 +84,21 @@ public class gerenciarProdutos {
         alert.setContentText("Deseja editar este produto?\n Essa ação é irreversível!");
         alert.showAndWait().ifPresent(response -> {
             if(response == ButtonType.OK){
-                System.out.println("Implementar");
+                FXMLLoader loader;
+                Parent novaTela = null;
+                try {
+                    loader = new FXMLLoader(getClass().getResource("/com/faiskaburguer/gerenciadores/editores/editarProduto.fxml"));
+                    loader .setController(new EditarProduto(tabelaProdutos.getSelectionModel().getSelectedItem()));
+                    novaTela = loader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                Scene novaTelaScene = new Scene(novaTela);
+                Stage stage = new Stage();
+                stage.setTitle("Editar Produto");
+                stage.setScene(novaTelaScene);
+                stage.show();
             }
         });
     }

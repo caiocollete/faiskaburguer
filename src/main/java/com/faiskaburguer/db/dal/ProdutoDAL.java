@@ -34,7 +34,7 @@ public class ProdutoDAL implements IDAL <Produtos> {
         String sql = """
                     UPDATE public.produto
                     	SET  pro_nome='#1', pro_descr='#2', pro_valor=#3, cat_id=#4
-                    	WHERE prod_id=#5
+                    	WHERE pro_id=#5
                 """;
 
 

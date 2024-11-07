@@ -19,4 +19,6 @@ module com.faiskaburguer {
     opens com.faiskaburguer.controllers.relatorios to javafx.fxml;
     exports com.faiskaburguer.db.entidade;
     opens com.faiskaburguer.db.entidade to javafx.fxml;
+    exports com.faiskaburguer.controllers.gerenciadores.editores;
+    opens com.faiskaburguer.controllers.gerenciadores.editores to javafx.fxml;
 }

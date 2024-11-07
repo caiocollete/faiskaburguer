@@ -14,10 +14,10 @@ public class mainController {
     @FXML
     protected void ControlePedido(ActionEvent event) throws IOException {
         // Carrega o novo FXML
-        Parent ctrlPedTela = FXMLLoader.load(getClass().getResource("/com/faiskaburguer/cadastros/ctrlPedido.fxml"));
+        Parent novaTela = FXMLLoader.load(getClass().getResource("/com/faiskaburguer/cadastros/ctrlPedido.fxml"));
 
         // Cria a nova cena
-        Scene novaTelaScene = new Scene(ctrlPedTela);
+        Scene novaTelaScene = new Scene(novaTela);
 
         // Obtém o Stage atual (janela) e configura a nova cena
         Stage stage = new Stage();
