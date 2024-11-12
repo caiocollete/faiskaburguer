@@ -97,6 +97,34 @@ public class mainController {
         stage.show();
     }
 
+    public void  gerenciarPedido(ActionEvent actionEvent) throws IOException{
+        // Carrega o novo FXML
+        Parent novaTelaRoot = FXMLLoader.load(getClass().getResource("/com/faiskaburguer/gerenciadores/gerenciarPedidos.fxml"));
+
+        // Cria a nova cena
+        Scene novaTelaScene = new Scene(novaTelaRoot);
+
+        // Obtém o Stage atual (janela) e configura a nova cena
+        Stage stage = new Stage();
+        stage.setTitle("Gerenciamento de Pedidos");
+        stage.setScene(novaTelaScene);
+        stage.show();
+    }
+
+    public void  gerenciarTipoPgto(ActionEvent actionEvent) throws IOException{
+        // Carrega o novo FXML
+        Parent novaTelaRoot = FXMLLoader.load(getClass().getResource("/com/faiskaburguer/gerenciadores/gerenciarTipoPgto.fxml"));
+
+        // Cria a nova cena
+        Scene novaTelaScene = new Scene(novaTelaRoot);
+
+        // Obtém o Stage atual (janela) e configura a nova cena
+        Stage stage = new Stage();
+        stage.setTitle("Gerenciamento de Tipo de Pagamento");
+        stage.setScene(novaTelaScene);
+        stage.show();
+    }
+
     @FXML
     protected void RelatorioPedidos(ActionEvent event) throws IOException {
         // Carrega o novo FXML

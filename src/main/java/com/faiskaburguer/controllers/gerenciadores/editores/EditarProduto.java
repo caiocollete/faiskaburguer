@@ -63,8 +63,8 @@ public class EditarProduto {
         }
         else{
             alert.setTitle("AVISO");
-            alert.setHeaderText(SingletonDB.getConexao().getMensagemErro());
-            alert.setContentText("Houve um erro no hora de salvar  o produto!");
+            alert.setHeaderText("Houve um erro no hora de salvar  o produto!");
+            alert.setContentText(SingletonDB.getConexao().getMensagemErro());
         }
         alert.showAndWait();
     }

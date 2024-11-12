@@ -1,21 +1,21 @@
-package com.faiskaburguer.controllers.cadastros;
+package com.faiskaburguer.controllers.gerenciadores.editores;
 
+import com.faiskaburguer.db.dal.CategoriaDAL;
 import com.faiskaburguer.db.dal.PedidoDAL;
 import com.faiskaburguer.db.dal.ProdutoDAL;
 import com.faiskaburguer.db.dal.TipoPagamentoDAL;
-import com.faiskaburguer.db.entidade.Endereco;
-import com.faiskaburguer.db.entidade.Pedido;
-import com.faiskaburguer.db.entidade.Produtos;
-import com.faiskaburguer.db.entidade.TipoPagamento;
+import com.faiskaburguer.db.entidade.*;
+import com.faiskaburguer.db.util.SingletonDB;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.io.IOException;
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CtrlPedido {
+public class EditarPedido {
+
     @FXML
     private TextField nome_cliente;
 
@@ -51,13 +51,44 @@ public class CtrlPedido {
 
     private List<Produtos> produtosSelecionados = new ArrayList<>();
     private List<Pedido.Item> listItens = new ArrayList<>();
-    private TipoPagamento tipoPagamento;
+
+    private Pedido pedido;
+
+    public EditarPedido(Pedido pedido) {;
+        this.pedido = pedido;
+    }
 
     @FXML
     protected void initialize() {
+        this.nome_cliente.setText(pedido.getClinome());
+        this.numero_cliente.setText(pedido.getClifone());
+        this.viagem_check.setSelected(pedido.getViagem());
+        if(pedido.getViagem()){
+            this.rua.setText(pedido.getEndereco().getRua());
+            this.cep.setText(pedido.getEndereco().getCep());
+            this.numero_casa.setText(pedido.getEndereco().getNumero());
+        }
+        else{
+            this.rua.clear();
+            this.cep.clear();
+            this.numero_casa.clear();
+        }
+
+
+        this.selectionTipoPagamento.getItems().add(new MenuItem(pedido.getTipoPagamento().getNome()));
+        this.selectionTipoPagamento.setText(pedido.getTipoPagamento().getNome());
+        this.total_pedido.setText(Double.toString(pedido.getTotal()));
+
+
+        List<Pedido.Item> itensPedido = pedido.getItens();
+        for(Pedido.Item item : itensPedido){
+            for(int i=0;i<item.quant();i++)
+                listSelectionProds.getItems().add(item.produtos().getNome());
+        }
+
+
         List<Produtos> produtosList = new ProdutoDAL().get("");
         List<TipoPagamento> tipoPagamentosList = new TipoPagamentoDAL().get();
-
         // Populate the MenuButton with product items
         for (Produtos produto : produtosList) {
             MenuItem menuItem = new MenuItem(produto.getNome());
@@ -97,18 +128,20 @@ public class CtrlPedido {
         }
 
         for(TipoPagamento tpgtObj : tipoPagamentosList){
-            MenuItem menuItem = new MenuItem(tpgtObj.getNome());
-            selectionTipoPagamento.getItems().add(menuItem);
+            if(!tpgtObj.equals(pedido.getTipoPagamento())){
+                MenuItem menuItem = new MenuItem(tpgtObj.getNome());
+                selectionTipoPagamento.getItems().add(menuItem);
 
-            menuItem.setOnAction(event -> {
-                this.tipoPagamento = tpgtObj;
-                selectionTipoPagamento.setText(tpgtObj.getNome());
-            });
+                menuItem.setOnAction(event -> {
+                    this.pedido.setTipoPagamento(tpgtObj);
+                    selectionTipoPagamento.setText(tpgtObj.getNome());
+                });
+            }
         }
     }
 
     @FXML
-    protected void GravarPedido() throws IOException {
+    protected void GravarPedido(ActionEvent event) {
         // Extrair e processar o valor total do pedido
         String total = total_pedido.getText();
         total = total.replace("R$", "").trim().replace(",", ".");
@@ -122,51 +155,38 @@ public class CtrlPedido {
 
         total = "R$ " + String.format("%.2f", totalDouble);
 
+        // Captura a resposta do usuário
+        Double finalTotalDouble = totalDouble;
+
         // Mostrar diálogo de confirmação do pedido
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmação de Pedido");
         alert.setContentText("Valor total do pedido: " + total);
-
-        // Captura a resposta do usuário
-        Double finalTotalDouble = totalDouble;
         alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                // Executar ação de gravação do pedido se o usuário confirmar
 
-                String nomeCliente = nome_cliente.getText();
-                String numeroCliente = numero_cliente.getText();
-                char viagem = 'N';
-                Pedido pedido;
+            if(response == ButtonType.OK){
+
+
+                PedidoDAL pedidoDAL = new PedidoDAL();
+                this.pedido.setClinome(nome_cliente.getText());
+                this.pedido.setClifone(numero_cliente.getText());
                 if(viagem_check.isSelected()){
-                    viagem = 'S';
-                     pedido = new Pedido(LocalDate.now(),nomeCliente,numeroCliente, finalTotalDouble,viagem,tipoPagamento,listItens, new Endereco(cep.getText(),rua.getText(),numero_casa.getText()));
+                    this.pedido.setEndereco(new Endereco(cep.getText(),rua.getText(),numero_casa.getText()));
+                }
+                this.pedido.setTotal(finalTotalDouble);
+
+                if(pedidoDAL.alterar(this.pedido)){
+                    alert.setTitle("AVISO");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Produto alterado com sucesso!");
                 }
                 else{
-                    pedido = new Pedido(LocalDate.now(),nomeCliente,numeroCliente, finalTotalDouble,viagem,tipoPagamento,listItens);
+                    alert.setTitle("AVISO");
+                    alert.setHeaderText("Houve um erro no hora de salvar  o produto!");
+                    alert.setContentText(SingletonDB.getConexao().getMensagemErro());
                 }
-
-                System.out.println("Salvando pedido...");
-
-                // Armazena no db
-                PedidoDAL pedidodal = new PedidoDAL();
-                pedidodal.gravar(pedido);
-
-
-                // Limpar campos após salvar o pedido
-                nome_cliente.clear();
-                numero_cliente.clear();
-                viagem_check.setSelected(false);
-                listSelectionProds.getItems().clear();
-                System.out.println("Pedido salvo com sucesso!");
             }
         });
-    }
-
-    @FXML
-    protected void ativarEndereco(){
-        rua.setDisable(!viagem_check.isSelected());
-        numero_casa.setDisable(!viagem_check.isSelected());
-        cep.setDisable(!viagem_check.isSelected());
     }
 
     @FXML
@@ -209,5 +229,12 @@ public class CtrlPedido {
         System.out.println(listSelectionProds.toString());
         System.out.println(produtosSelecionados.toString()); // DIMINUIR UM PRODUTO
         System.out.println(listItens.toString()); // ESTA INSERINDO DUPLICADO
+    }
+
+    @FXML
+    protected void ativarEndereco(){
+        rua.setDisable(!viagem_check.isSelected());
+        numero_casa.setDisable(!viagem_check.isSelected());
+        cep.setDisable(!viagem_check.isSelected());
     }
 }

@@ -13,10 +13,11 @@ public class CategoriaDAL implements IDAL <Categoria> {
     @Override
     public boolean gravar(Categoria entidade) {
         String sql = """
-                    INSERT INTO categoria(cat_nome) VALUES ('#1');
+                    INSERT INTO categoria(cat_nome,cat_id) VALUES ('#1', #2);
                 """;
 
         sql = sql.replace("#1", entidade.getNome());
+        sql = sql.replace("#2", ""+SingletonDB.getConexao().getMaxPK("categoria", "cat_id")+1);
         return SingletonDB.getConexao().manipular(sql);
     }
 

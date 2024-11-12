@@ -99,6 +99,8 @@ public class Pedido {
         return total;
     }
 
+
+
     public void setTotal(double total) {
         this.total = total;
     }

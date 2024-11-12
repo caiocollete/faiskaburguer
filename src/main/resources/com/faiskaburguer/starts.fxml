@@ -37,6 +37,8 @@
             <Menu mnemonicParsing="false" text="Gerenciar">
                <items>
                 <MenuItem mnemonicParsing="false" onAction="#gerenciarProdutos" text="Produtos" />
+                <MenuItem mnemonicParsing="false" onAction="#gerenciarPedido" text="Pedido" />
+                <MenuItem mnemonicParsing="false" onAction="#gerenciarTipoPgto" text="Tipo de Pagamento" />
                </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Relatórios">

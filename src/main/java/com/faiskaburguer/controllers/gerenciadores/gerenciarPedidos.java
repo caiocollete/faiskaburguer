@@ -1,8 +1,8 @@
 package com.faiskaburguer.controllers.gerenciadores;
 
-import com.faiskaburguer.controllers.gerenciadores.editores.EditarProduto;
-import com.faiskaburguer.db.dal.ProdutoDAL;
-import com.faiskaburguer.db.entidade.Produtos;
+import com.faiskaburguer.controllers.gerenciadores.editores.EditarPedido;
+import com.faiskaburguer.db.dal.PedidoDAL;
+import com.faiskaburguer.db.entidade.Pedido;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,22 +15,27 @@ import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
-public class gerenciarProdutos {
+public class gerenciarPedidos {
 
     @FXML
     private TextField filtro;
     @FXML
-    private TableView<Produtos> tabelaProdutos; // Adicione o TableView no FXML
+    private TableView<Pedido> tabelaPedidos; // Adicione o TableView no FXML
     @FXML
-    private TableColumn<Produtos, String> nome_column;
+    private TableColumn<Pedido, String> cliente_column;
     @FXML
-    private TableColumn<Produtos, String> cat_column;
+    private TableColumn<Pedido, String> telefone_column;
     @FXML
-    private TableColumn<Produtos, String> valor_column;
+    private TableColumn<Pedido, String> viagem_column;
+    @FXML
+    private TableColumn<Pedido, Date> data_column;
+    @FXML
+    private TableColumn<Pedido, String> valor_column;
 
-    private ObservableList<Produtos> produtosShowing;
+    private ObservableList<Pedido> pedidosShowing;
 
     @FXML
     protected void initialize() {
@@ -40,28 +45,30 @@ public class gerenciarProdutos {
 
     @FXML
     protected void Pesquisar(ActionEvent actionEvent) {
-        ProdutoDAL produtoDAL = new ProdutoDAL();
+        PedidoDAL pedidoDAL = new PedidoDAL();
         if (!filtro.getText().isEmpty()){
-            atualizaListaProdutos(produtoDAL.get("pro_nome iLIKE"+"'%" + filtro.getText() + "%'"));
+            atualizaListaPedido(pedidoDAL.get("ped_clinome iLIKE"+"'%" + filtro.getText() + "%'"));
         }
     }
 
     @FXML
     protected void Atualizar(ActionEvent actionEvent) {
-        ProdutoDAL produtoDAL = new ProdutoDAL();
-        atualizaListaProdutos(produtoDAL.get(""));
+        PedidoDAL pedidoDAL = new PedidoDAL();
+        atualizaListaPedido(pedidoDAL.get(""));
 
     }
 
 
     private void initTable() {
-        nome_column.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        cat_column.setCellValueFactory(new PropertyValueFactory<>("categoria"));
-        valor_column.setCellValueFactory(new PropertyValueFactory<>("valor"));
+        cliente_column.setCellValueFactory(new PropertyValueFactory<>("clinome"));
+        telefone_column.setCellValueFactory(new PropertyValueFactory<>("clifone"));
+        viagem_column.setCellValueFactory(new PropertyValueFactory<>("viagem"));
+        valor_column.setCellValueFactory(new PropertyValueFactory<>("total"));
+        data_column.setCellValueFactory(new PropertyValueFactory<>("data"));
     }
-    private void atualizaListaProdutos(List<Produtos> produtosList) {
-        produtosShowing = FXCollections.observableArrayList(produtosList);
-        tabelaProdutos.setItems(produtosShowing);
+    private void atualizaListaPedido(List<Pedido> pedidoList) {
+        pedidosShowing = FXCollections.observableArrayList(pedidoList);
+        tabelaPedidos.setItems(pedidosShowing);
     }
 
     @FXML
@@ -69,11 +76,11 @@ public class gerenciarProdutos {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("PERIGO!");
         alert.setHeaderText("TEM CERTEZA QUE DESEJA APAGAR?");
-        alert.setContentText("Deseja apagar este produto?\n Essa ação é irreversível!");
+        alert.setContentText("Deseja apagar este pedido?\n Essa ação é irreversível!");
         alert.showAndWait().ifPresent(response -> {
             if(response == ButtonType.OK){
-                ProdutoDAL produtoDAL = new ProdutoDAL();
-                produtoDAL.apagar(tabelaProdutos.getSelectionModel().getSelectedItem());
+                PedidoDAL pedidoDAL = new PedidoDAL();
+                pedidoDAL.apagar(tabelaPedidos.getSelectionModel().getSelectedItem());
             }
         });
         // O produto nao apaga caso tenha sido referenciado em uma tabela Item, estou pensando em adicionar uma flag na tabela produtos e fazer exclusao logica apenas
@@ -84,14 +91,14 @@ public class gerenciarProdutos {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("PERIGO!");
         alert.setHeaderText("TEM CERTEZA QUE DESEJA EDITAR?");
-        alert.setContentText("Deseja editar este produto?\n Essa ação é irreversível!");
+        alert.setContentText("Deseja editar este pedido?\n Essa ação é irreversível!");
         alert.showAndWait().ifPresent(response -> {
             if(response == ButtonType.OK){
                 FXMLLoader loader;
                 Parent novaTela = null;
                 try {
-                    loader = new FXMLLoader(getClass().getResource("/com/faiskaburguer/gerenciadores/editores/editarProduto.fxml"));
-                    loader .setController(new EditarProduto(tabelaProdutos.getSelectionModel().getSelectedItem()));
+                    loader = new FXMLLoader(getClass().getResource("/com/faiskaburguer/gerenciadores/editores/editarPedido.fxml"));
+                    loader .setController(new EditarPedido(tabelaPedidos.getSelectionModel().getSelectedItem()));
                     novaTela = loader.load();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -99,7 +106,7 @@ public class gerenciarProdutos {
 
                 Scene novaTelaScene = new Scene(novaTela);
                 Stage stage = new Stage();
-                stage.setTitle("Editar Produto");
+                stage.setTitle("Editar Pedido");
                 stage.setScene(novaTelaScene);
                 stage.show();
             }
