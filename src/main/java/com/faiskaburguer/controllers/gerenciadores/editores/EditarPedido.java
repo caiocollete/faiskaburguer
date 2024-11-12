@@ -62,8 +62,9 @@ public class EditarPedido {
     protected void initialize() {
         this.nome_cliente.setText(pedido.getClinome());
         this.numero_cliente.setText(pedido.getClifone());
-        this.viagem_check.setSelected(pedido.getViagem());
-        if(pedido.getViagem()){
+        this.viagem_check.setSelected(false);
+        if(pedido.getViagem()==1){
+            this.viagem_check.setSelected(true);
             this.rua.setText(pedido.getEndereco().getRua());
             this.cep.setText(pedido.getEndereco().getCep());
             this.numero_casa.setText(pedido.getEndereco().getNumero());
@@ -77,13 +78,16 @@ public class EditarPedido {
 
         this.selectionTipoPagamento.getItems().add(new MenuItem(pedido.getTipoPagamento().getNome()));
         this.selectionTipoPagamento.setText(pedido.getTipoPagamento().getNome());
-        this.total_pedido.setText(Double.toString(pedido.getTotal()));
+        this.total_pedido.setText("R$" + pedido.getTotal());
 
 
         List<Pedido.Item> itensPedido = pedido.getItens();
         for(Pedido.Item item : itensPedido){
-            for(int i=0;i<item.quant();i++)
+            listItens.add(item);
+            for(int i=0;i<item.quant();i++){
                 listSelectionProds.getItems().add(item.produtos().getNome());
+                produtosSelecionados.add(item.produtos());
+            }
         }
 
 
@@ -124,7 +128,6 @@ public class EditarPedido {
                 totalDouble += produto.getValor();
                 total_pedido.setText("R$" + String.format("%.2f", totalDouble));
             });
-
         }
 
         for(TipoPagamento tpgtObj : tipoPagamentosList){
@@ -172,7 +175,9 @@ public class EditarPedido {
                 this.pedido.setClifone(numero_cliente.getText());
                 if(viagem_check.isSelected()){
                     this.pedido.setEndereco(new Endereco(cep.getText(),rua.getText(),numero_casa.getText()));
+                    this.pedido.setViagem(1);
                 }
+                else this.pedido.setViagem(0);
                 this.pedido.setTotal(finalTotalDouble);
 
                 if(pedidoDAL.alterar(this.pedido)){

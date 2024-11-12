@@ -64,7 +64,7 @@ public class relPedidos {
         nome.setText(pedido.getClinome());
         telefone.setText(pedido.getClifone());
         dataPedido.setValue(pedido.getData());
-        if(pedido.getViagem()){
+        if(pedido.getViagem()==1){
             viagem.setSelected(true);
             rua.setText(pedido.getEndereco().getRua());
             numero.setText(pedido.getEndereco().getNumero());

@@ -14,7 +14,7 @@ public class Pedido {
     private String clinome;
     private String clifone;
     private double total;
-    private char viagem; // S || N
+    private int viagem; // 1 || 0
     private TipoPagamento tipoPagamento;
     private List<Item> listItens;
     private Endereco endereco;
@@ -22,7 +22,7 @@ public class Pedido {
     public Pedido() {}
 
     // usa para criar o pedido
-    public Pedido(LocalDate data, String clinome, String clifone, double total, char viagem, TipoPagamento tipoPagamento, List<Item> listItens, Endereco endereco) {
+    public Pedido(LocalDate data, String clinome, String clifone, double total, int viagem, TipoPagamento tipoPagamento, List<Item> listItens, Endereco endereco) {
         this.data = data;
         this.clinome = clinome;
         this.clifone = clifone;
@@ -34,7 +34,7 @@ public class Pedido {
     }
 
     // usa para resgatar o pedido do db
-    public Pedido(int id, LocalDate data, String clinome, String clifone, double total, char viagem, TipoPagamento tipoPagamento) {
+    public Pedido(int id, LocalDate data, String clinome, String clifone, double total, int viagem, TipoPagamento tipoPagamento) {
         this.id = id;
         this.data = data;
         this.clinome = clinome;
@@ -45,7 +45,7 @@ public class Pedido {
         this.listItens = new ArrayList<>();
     }
 
-    public Pedido(LocalDate now, String nomeCliente, String numeroCliente, Double finalTotalDouble, char viagem, TipoPagamento tipoPagamento, List<Item> listItens) {
+    public Pedido(LocalDate now, String nomeCliente, String numeroCliente, Double finalTotalDouble, int viagem, TipoPagamento tipoPagamento, List<Item> listItens) {
         this.data = data;
         this.clinome = clinome;
         this.clifone = clifone;
@@ -105,13 +105,11 @@ public class Pedido {
         this.total = total;
     }
 
-    public boolean getViagem() {
-        if (viagem=='S')
-            return true;
-        else return false;
+    public int getViagem() {
+        return viagem;
     }
 
-    public void setViagem(char viagem) {
+    public void setViagem(int viagem) {
         this.viagem = viagem;
     }
 

@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
+import javax.imageio.IIOException;
 import java.io.IOException;
 
 public class mainController {
@@ -121,6 +122,20 @@ public class mainController {
         // Obtém o Stage atual (janela) e configura a nova cena
         Stage stage = new Stage();
         stage.setTitle("Gerenciamento de Tipo de Pagamento");
+        stage.setScene(novaTelaScene);
+        stage.show();
+    }
+
+    public void gerenciarCategoria(ActionEvent actionEvent) throws IOException{
+        // Carrega o novo FXML
+        Parent novaTelaRoot = FXMLLoader.load(getClass().getResource("/com/faiskaburguer/gerenciadores/gerenciarCategoria.fxml"));
+
+        // Cria a nova cena
+        Scene novaTelaScene = new Scene(novaTelaRoot);
+
+        // Obtém o Stage atual (janela) e configura a nova cena
+        Stage stage = new Stage();
+        stage.setTitle("Gerenciamento de Categoria");
         stage.setScene(novaTelaScene);
         stage.show();
     }

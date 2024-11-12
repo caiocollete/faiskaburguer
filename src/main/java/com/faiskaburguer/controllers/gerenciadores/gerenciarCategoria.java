@@ -1,11 +1,8 @@
 package com.faiskaburguer.controllers.gerenciadores;
 
-import com.faiskaburguer.controllers.gerenciadores.editores.EditarPedido;
-import com.faiskaburguer.controllers.gerenciadores.editores.EditarTipoPgto;
-import com.faiskaburguer.db.dal.PedidoDAL;
-import com.faiskaburguer.db.dal.TipoPagamentoDAL;
-import com.faiskaburguer.db.entidade.Pedido;
-import com.faiskaburguer.db.entidade.TipoPagamento;
+import com.faiskaburguer.controllers.gerenciadores.editores.EditarCategoria;
+import com.faiskaburguer.db.dal.CategoriaDAL;
+import com.faiskaburguer.db.entidade.Categoria;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,16 +17,16 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
-public class gerenciarTipoPgto {
+public class gerenciarCategoria {
 
     @FXML
     private TextField filtro;
     @FXML
-    private TableView<TipoPagamento> tabelaTipoPgto; // Adicione o TableView no FXML
+    private TableView<Categoria> tabelaCategoria; // Adicione o TableView no FXML
     @FXML
-    private TableColumn<TipoPagamento, String> tipopgtoNome_column;
+    private TableColumn<Categoria, String> catNome_column;
 
-    private ObservableList<TipoPagamento> TipoPgtoShowing;
+    private ObservableList<Categoria> catShowing;
 
     @FXML
     protected void initialize() {
@@ -39,28 +36,28 @@ public class gerenciarTipoPgto {
 
     @FXML
     protected void Pesquisar(ActionEvent actionEvent) {
-        TipoPagamentoDAL tipoPagamentoDAL = new TipoPagamentoDAL();
+        CategoriaDAL categoriaDAL = new CategoriaDAL();
         if (!filtro.getText().isEmpty()){
-            atualizaListaPedido(tipoPagamentoDAL.get("tpg_nome iLIKE"+"'%" + filtro.getText() + "%'"));
+            atualizaListaCat(categoriaDAL.get("cat_nome iLIKE"+"'%" + filtro.getText() + "%'"));
         }
     }
 
     @FXML
     protected void Atualizar(ActionEvent actionEvent) {
-        TipoPagamentoDAL tipoPagamentoDAL = new TipoPagamentoDAL();
-        atualizaListaPedido(tipoPagamentoDAL.get(""));
+        CategoriaDAL categoriaDAL = new CategoriaDAL();
+        atualizaListaCat(categoriaDAL.get(""));
 
     }
 
 
 
     private void initTable() {
-        tipopgtoNome_column.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        catNome_column.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
     }
-    private void atualizaListaPedido(List<TipoPagamento> tipoPagamentoList) {
-        TipoPgtoShowing = FXCollections.observableArrayList(tipoPagamentoList);
-        tabelaTipoPgto.setItems(TipoPgtoShowing);
+    private void atualizaListaCat(List<Categoria> categoriaList) {
+        catShowing = FXCollections.observableArrayList(categoriaList);
+        tabelaCategoria.setItems(catShowing);
     }
 
     @FXML
@@ -68,11 +65,11 @@ public class gerenciarTipoPgto {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("PERIGO!");
         alert.setHeaderText("TEM CERTEZA QUE DESEJA APAGAR?");
-        alert.setContentText("Deseja apagar este tipo de pagamento?\n Essa ação é irreversível!");
+        alert.setContentText("Deseja apagar esta Categoria?\n Essa ação é irreversível!");
         alert.showAndWait().ifPresent(response -> {
             if(response == ButtonType.OK){
-                TipoPagamentoDAL tipoPagamentoDAL = new TipoPagamentoDAL();
-                tipoPagamentoDAL.apagar(tabelaTipoPgto.getSelectionModel().getSelectedItem());
+                CategoriaDAL categoriaDAL = new CategoriaDAL();
+                categoriaDAL.apagar(tabelaCategoria.getSelectionModel().getSelectedItem());
             }
         });
     }
@@ -82,14 +79,14 @@ public class gerenciarTipoPgto {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("PERIGO!");
         alert.setHeaderText("TEM CERTEZA QUE DESEJA EDITAR?");
-        alert.setContentText("Deseja editar este tipo de pagamento?\n Essa ação é irreversível!");
+        alert.setContentText("Deseja editar esta Categoria?\n Essa ação é irreversível!");
         alert.showAndWait().ifPresent(response -> {
             if(response == ButtonType.OK){
                 FXMLLoader loader;
                 Parent novaTela = null;
                 try {
-                    loader = new FXMLLoader(getClass().getResource("/com/faiskaburguer/gerenciadores/editores/editarTipoPgto.fxml"));
-                    loader .setController(new EditarTipoPgto(tabelaTipoPgto.getSelectionModel().getSelectedItem()));
+                    loader = new FXMLLoader(getClass().getResource("/com/faiskaburguer/gerenciadores/editores/editarCategoria.fxml"));
+                    loader .setController(new EditarCategoria(tabelaCategoria.getSelectionModel().getSelectedItem()));
                     novaTela = loader.load();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -97,7 +94,7 @@ public class gerenciarTipoPgto {
 
                 Scene novaTelaScene = new Scene(novaTela);
                 Stage stage = new Stage();
-                stage.setTitle("Editar Tipo de Pagamento");
+                stage.setTitle("Editar Categoria");
                 stage.setScene(novaTelaScene);
                 stage.show();
             }

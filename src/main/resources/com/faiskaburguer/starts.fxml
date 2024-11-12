@@ -27,17 +27,18 @@
         <menus>
           <Menu mnemonicParsing="false" text="Cadastros">
             <items>
+                  <MenuItem mnemonicParsing="false" onAction="#CadastrarCategoria" text="Categoria" />
+                  <MenuItem mnemonicParsing="false" onAction="#CadastrarEmpresa" text="Empresa" />
               <MenuItem mnemonicParsing="false" onAction="#ControlePedido" text="Pedido" />
                   <MenuItem mnemonicParsing="false" onAction="#AnotarProdutos" text="Produto" />
-                  <MenuItem mnemonicParsing="false" onAction="#CadastrarEmpresa" text="Empresa" />
                   <MenuItem mnemonicParsing="false" onAction="#CadastrarTipoPagamento" text="Tipo Pagamento" />
-                  <MenuItem mnemonicParsing="false" onAction="#CadastrarCategoria" text="Categoria" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Gerenciar">
                <items>
-                <MenuItem mnemonicParsing="false" onAction="#gerenciarProdutos" text="Produtos" />
+                <MenuItem mnemonicParsing="false" onAction="#gerenciarCategoria" text="Categoria" />
                 <MenuItem mnemonicParsing="false" onAction="#gerenciarPedido" text="Pedido" />
+                <MenuItem mnemonicParsing="false" onAction="#gerenciarProdutos" text="Produtos" />
                 <MenuItem mnemonicParsing="false" onAction="#gerenciarTipoPgto" text="Tipo de Pagamento" />
                </items>
             </Menu>

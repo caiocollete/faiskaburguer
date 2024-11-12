@@ -11,7 +11,7 @@ import javafx.scene.control.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class anotarProduto {
+public class cadProduto {
 
 
     @FXML

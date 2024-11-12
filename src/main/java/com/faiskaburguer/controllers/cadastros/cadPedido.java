@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CtrlPedido {
+public class cadPedido {
     @FXML
     private TextField nome_cliente;
 
@@ -138,7 +138,7 @@ public class CtrlPedido {
                 char viagem = 'N';
                 Pedido pedido;
                 if(viagem_check.isSelected()){
-                    viagem = 'S';
+                    viagem = 1;
                      pedido = new Pedido(LocalDate.now(),nomeCliente,numeroCliente, finalTotalDouble,viagem,tipoPagamento,listItens, new Endereco(cep.getText(),rua.getText(),numero_casa.getText()));
                 }
                 else{

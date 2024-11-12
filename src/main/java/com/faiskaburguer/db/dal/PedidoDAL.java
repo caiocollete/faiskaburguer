@@ -15,14 +15,9 @@ public class PedidoDAL implements IDAL <Pedido>{
     public boolean gravar(Pedido entidade) {
         boolean erro = false;
 
-        if(entidade.getViagem()){
-            EnderecoDAL enderecoDAL = new EnderecoDAL();
-            enderecoDAL.gravar(entidade.getEndereco());
-        }
-
         String sqlPedido = """ 
                     INSERT INTO pedido (ped_data, ped_clinome, ped_clifone, ped_total, ped_viagem, tpg_id, ped_id, end_id)
-                    VALUES ('#1', '#2', '#3', '#4', '#5', #6, #7, #8);
+                    VALUES ('#1', '#2', '#3', '#4', #5, #6, #7, #8);
                     """;
         sqlPedido = sqlPedido.replace("#1",entidade.getData().toString());
         sqlPedido = sqlPedido.replace("#2",entidade.getClinome());
@@ -31,7 +26,14 @@ public class PedidoDAL implements IDAL <Pedido>{
         sqlPedido = sqlPedido.replace("#5",""+entidade.getViagem());
         sqlPedido = sqlPedido.replace("#6",""+entidade.getTipoPagamento().getId());
         sqlPedido = sqlPedido.replace("#7",""+(SingletonDB.getConexao().getMaxPK("pedido","ped_id")+1));
-        sqlPedido = sqlPedido.replace("#8",""+ SingletonDB.getConexao().getMaxPK("endereco","end_id"));
+        if(entidade.getViagem()==1){
+            EnderecoDAL enderecoDAL = new EnderecoDAL();
+            enderecoDAL.gravar(entidade.getEndereco());
+            sqlPedido = sqlPedido.replace("#8",""+ SingletonDB.getConexao().getMaxPK("endereco","end_id"));
+        }
+        else{
+            sqlPedido = sqlPedido.replace("#8","null");
+        }
         if (SingletonDB.getConexao().manipular(sqlPedido)) {
             int id= SingletonDB.getConexao().getMaxPK("pedido","ped_id");
                 for(Pedido.Item item : entidade.getItens()){
@@ -58,7 +60,7 @@ public class PedidoDAL implements IDAL <Pedido>{
         boolean erro = false;
         String sql = """
                     UPDATE pedido
-                    	SET ped_data='#2', ped_clinome='#3', ped_clifone='#4', ped_total=#5, ped_viagem='#6', tpg_id=#7
+                    	SET ped_data='#2', ped_clinome='#3', ped_clifone='#4', ped_total=#5, ped_viagem=#6, tpg_id=#7, end_id=#8
                     	WHERE ped_id=#1;
                 """;
 
@@ -69,6 +71,14 @@ public class PedidoDAL implements IDAL <Pedido>{
         sql = sql.replace("#5", ""+entidade.getTotal());
         sql = sql.replace("#6", ""+entidade.getViagem());
         sql = sql.replace("#7", ""+entidade.getTipoPagamento().getId());
+        if(entidade.getViagem()==1){
+            EnderecoDAL enderecoDAL = new EnderecoDAL();
+            enderecoDAL.gravar(entidade.getEndereco());
+            sql = sql.replace("#8",""+ SingletonDB.getConexao().getMaxPK("endereco","end_id"));
+        }
+        else{
+            sql = sql.replace("#8","null");
+        }
         if (SingletonDB.getConexao().manipular(sql)) {
             //apaga todos os itens do pedido e cria dnv
             SingletonDB.getConexao().manipular("DELETE FROM item WHERE ped_id="+entidade.getId());
@@ -93,7 +103,8 @@ public class PedidoDAL implements IDAL <Pedido>{
     @Override
     public boolean apagar(Pedido entidade) {
         SingletonDB.getConexao().manipular("DELETE FROM item WHERE ped_id="+entidade.getId());
-        SingletonDB.getConexao().manipular("DELETE FROM endereco WHERE end_id="+entidade.getEndereco().getId());
+        if(entidade.getViagem()==1)
+            SingletonDB.getConexao().manipular("DELETE FROM endereco WHERE end_id="+entidade.getEndereco().getId());
         return SingletonDB.getConexao().manipular("DELETE FROM pedido WHERE ped_id="+entidade.getId());
     }
 
@@ -109,7 +120,7 @@ public class PedidoDAL implements IDAL <Pedido>{
                         resultSet.getString("ped_clinome"),
                         resultSet.getString("ped_clifone"),
                         resultSet.getDouble("ped_total"),
-                        resultSet.getString("ped_viagem").charAt(0),
+                        resultSet.getInt("ped_viagem"),
                         new TipoPagamentoDAL().get(resultSet.getInt("tpg_id")));
                 Endereco endereco = new EnderecoDAL().get(resultSet.getInt("end_id"));
                 pedido.setEndereco(endereco);
@@ -146,7 +157,7 @@ public class PedidoDAL implements IDAL <Pedido>{
                         resultSet.getString("ped_clinome"),
                         resultSet.getString("ped_clifone"),
                         resultSet.getDouble("ped_total"),
-                        resultSet.getString("ped_viagem").charAt(0),
+                        resultSet.getInt("ped_viagem"),
                         new TipoPagamentoDAL().get(resultSet.getInt("tpg_id")));
                 Endereco endereco = new EnderecoDAL().get(resultSet.getInt("end_id"));
                 pedido.setEndereco(endereco);

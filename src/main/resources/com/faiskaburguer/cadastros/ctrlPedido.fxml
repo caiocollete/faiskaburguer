@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.faiskaburguer.controllers.cadastros.CtrlPedido">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.faiskaburguer.controllers.cadastros.cadPedido">
    <center>
       <Pane maxHeight="370.0" maxWidth="600.0" minHeight="370.0" minWidth="600.0" prefHeight="370.0" prefWidth="600.0" stylesheets="@../style.css" BorderPane.alignment="CENTER">
          <children>

@@ -13,7 +13,7 @@ public class EnderecoDAL implements IDAL <Endereco>{
     @Override
     public boolean gravar(Endereco entidade) {
         String sql = """
-                    INSERT INTO endereco(end_cep, end_rua, end_numero, end_bairro, end_cidade, end_uf) VALUES ('#1', '#2', '#3', '#4', '#5', '#6');
+                    INSERT INTO endereco(end_cep, end_rua, end_numero, end_bairro, end_cidade, end_uf, end_id) VALUES ('#1', '#2', '#3', '#4', '#5', '#6',#7);
                 """;
 
         sql = sql.replace("#1", entidade.getCep());
@@ -22,6 +22,7 @@ public class EnderecoDAL implements IDAL <Endereco>{
         sql = sql.replace("#4", entidade.getBairro());
         sql = sql.replace("#5", entidade.getCidade());
         sql = sql.replace("#6", entidade.getUf());
+        sql = sql.replace("#7", ""+SingletonDB.getConexao().getMaxPK("endereco", "end_id")+1);
         return SingletonDB.getConexao().manipular(sql);
     }
 

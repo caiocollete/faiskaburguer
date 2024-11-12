@@ -83,7 +83,6 @@ public class gerenciarPedidos {
                 pedidoDAL.apagar(tabelaPedidos.getSelectionModel().getSelectedItem());
             }
         });
-        // O produto nao apaga caso tenha sido referenciado em uma tabela Item, estou pensando em adicionar uma flag na tabela produtos e fazer exclusao logica apenas
     }
 
     @FXML
