@@ -5,6 +5,7 @@ import com.faiskaburguer.db.dal.PedidoDAL;
 import com.faiskaburguer.db.dal.ProdutoDAL;
 import com.faiskaburguer.db.dal.TipoPagamentoDAL;
 import com.faiskaburguer.db.entidade.*;
+import com.faiskaburguer.db.util.Mascaras;
 import com.faiskaburguer.db.util.SingletonDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,8 @@ import javafx.scene.control.*;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.faiskaburguer.db.util.Mascaras.mascFone;
 
 public class EditarPedido {
 
@@ -172,7 +175,7 @@ public class EditarPedido {
 
                 PedidoDAL pedidoDAL = new PedidoDAL();
                 this.pedido.setClinome(nome_cliente.getText());
-                this.pedido.setClifone(numero_cliente.getText());
+                this.pedido.setClifone(Mascaras.mascFone(numero_cliente.getText()));
                 if(viagem_check.isSelected()){
                     this.pedido.setEndereco(new Endereco(cep.getText(),rua.getText(),numero_casa.getText()));
                     this.pedido.setViagem(1);

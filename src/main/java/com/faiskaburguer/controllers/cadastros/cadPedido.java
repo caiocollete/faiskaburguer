@@ -7,6 +7,7 @@ import com.faiskaburguer.db.entidade.Endereco;
 import com.faiskaburguer.db.entidade.Pedido;
 import com.faiskaburguer.db.entidade.Produtos;
 import com.faiskaburguer.db.entidade.TipoPagamento;
+import com.faiskaburguer.db.util.Mascaras;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -14,6 +15,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.faiskaburguer.db.util.Mascaras.mascFone;
 
 public class cadPedido {
     @FXML
@@ -134,7 +137,7 @@ public class cadPedido {
                 // Executar ação de gravação do pedido se o usuário confirmar
 
                 String nomeCliente = nome_cliente.getText();
-                String numeroCliente = numero_cliente.getText();
+                String numeroCliente = Mascaras.mascFone(numero_cliente.getText());
                 char viagem = 'N';
                 Pedido pedido;
                 if(viagem_check.isSelected()){

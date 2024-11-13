@@ -4,6 +4,7 @@ import com.faiskaburguer.db.dal.EmpresaDAL;
 import com.faiskaburguer.db.dal.EnderecoDAL;
 import com.faiskaburguer.db.entidade.Empresa;
 import com.faiskaburguer.db.entidade.Endereco;
+import com.faiskaburguer.db.util.Mascaras;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -42,8 +43,8 @@ public class cadEmpresa {
     protected void CadastrarEmpresa(){
         String razao = emp_razao_field.getText();
         String fantasia = emp_fantasia_field.getText();
-        String cnpj = emp_cnpj_field.getText();
-        String telefone = emp_telefone_field.getText();
+        String cnpj = Mascaras.mascCnpj(emp_cnpj_field.getText());
+        String telefone = Mascaras.mascFone(emp_telefone_field.getText());
         String email = emp_email_field.getText();
         String cep = emp_cep_field.getText();
         String rua = emp_rua_field.getText();

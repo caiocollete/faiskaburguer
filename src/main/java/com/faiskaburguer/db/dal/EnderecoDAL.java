@@ -22,7 +22,7 @@ public class EnderecoDAL implements IDAL <Endereco>{
         sql = sql.replace("#4", entidade.getBairro());
         sql = sql.replace("#5", entidade.getCidade());
         sql = sql.replace("#6", entidade.getUf());
-        sql = sql.replace("#7", ""+SingletonDB.getConexao().getMaxPK("endereco", "end_id")+1);
+        sql = sql.replace("#7", ""+(SingletonDB.getConexao().getMaxPK("endereco", "end_id")+1));
         return SingletonDB.getConexao().manipular(sql);
     }
 

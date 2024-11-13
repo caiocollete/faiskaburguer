@@ -37,6 +37,7 @@
             <Menu mnemonicParsing="false" text="Gerenciar">
                <items>
                 <MenuItem mnemonicParsing="false" onAction="#gerenciarCategoria" text="Categoria" />
+                <MenuItem mnemonicParsing="false" onAction="#gerenciarEmpresa" text="Empresa" />
                 <MenuItem mnemonicParsing="false" onAction="#gerenciarPedido" text="Pedido" />
                 <MenuItem mnemonicParsing="false" onAction="#gerenciarProdutos" text="Produtos" />
                 <MenuItem mnemonicParsing="false" onAction="#gerenciarTipoPgto" text="Tipo de Pagamento" />

@@ -42,7 +42,8 @@ public class mainController {
         stage.show();
     }
 
-    public void CadastrarEmpresa(ActionEvent actionEvent) throws IOException {
+    @FXML
+    protected void CadastrarEmpresa(ActionEvent actionEvent) throws IOException{
         // Carrega o novo FXML
         Parent novaTelaRoot = FXMLLoader.load(getClass().getResource("/com/faiskaburguer/cadastros/cadEmpresa.fxml"));
 
@@ -56,7 +57,8 @@ public class mainController {
         stage.show();
     }
 
-    public void CadastrarTipoPagamento(ActionEvent actionEvent) throws IOException {
+    @FXML
+    protected void CadastrarTipoPagamento(ActionEvent actionEvent) throws IOException {
         // Carrega o novo FXML
         Parent novaTelaRoot = FXMLLoader.load(getClass().getResource("/com/faiskaburguer/cadastros/cadTipoPgto.fxml"));
 
@@ -70,7 +72,8 @@ public class mainController {
         stage.show();
     }
 
-    public void CadastrarCategoria(ActionEvent actionEvent) throws IOException {
+    @FXML
+    protected void CadastrarCategoria(ActionEvent actionEvent) throws IOException {
         // Carrega o novo FXML
         Parent novaTelaRoot = FXMLLoader.load(getClass().getResource("/com/faiskaburguer/cadastros/cadCategoria.fxml"));
 
@@ -84,7 +87,8 @@ public class mainController {
         stage.show();
     }
 
-    public void gerenciarProdutos(ActionEvent actionEvent) throws IOException {
+    @FXML
+    protected void gerenciarProdutos(ActionEvent actionEvent) throws IOException {
         // Carrega o novo FXML
         Parent novaTelaRoot = FXMLLoader.load(getClass().getResource("/com/faiskaburguer/gerenciadores/gerenciarProdutos.fxml"));
 
@@ -98,7 +102,8 @@ public class mainController {
         stage.show();
     }
 
-    public void  gerenciarPedido(ActionEvent actionEvent) throws IOException{
+    @FXML
+    protected void  gerenciarPedido(ActionEvent actionEvent) throws IOException{
         // Carrega o novo FXML
         Parent novaTelaRoot = FXMLLoader.load(getClass().getResource("/com/faiskaburguer/gerenciadores/gerenciarPedidos.fxml"));
 
@@ -112,7 +117,8 @@ public class mainController {
         stage.show();
     }
 
-    public void  gerenciarTipoPgto(ActionEvent actionEvent) throws IOException{
+    @FXML
+    protected void  gerenciarTipoPgto(ActionEvent actionEvent) throws IOException{
         // Carrega o novo FXML
         Parent novaTelaRoot = FXMLLoader.load(getClass().getResource("/com/faiskaburguer/gerenciadores/gerenciarTipoPgto.fxml"));
 
@@ -126,7 +132,8 @@ public class mainController {
         stage.show();
     }
 
-    public void gerenciarCategoria(ActionEvent actionEvent) throws IOException{
+    @FXML
+    protected void gerenciarCategoria(ActionEvent actionEvent) throws IOException{
         // Carrega o novo FXML
         Parent novaTelaRoot = FXMLLoader.load(getClass().getResource("/com/faiskaburguer/gerenciadores/gerenciarCategoria.fxml"));
 
@@ -139,6 +146,23 @@ public class mainController {
         stage.setScene(novaTelaScene);
         stage.show();
     }
+
+    @FXML
+    protected void gerenciarEmpresa(ActionEvent event) throws IOException{
+        // Carrega o novo FXML
+        Parent novaTelaRoot = FXMLLoader.load(getClass().getResource("/com/faiskaburguer/gerenciadores/gerenciarEmpresa.fxml"));
+
+        // Cria a nova cena
+        Scene novaTelaScene = new Scene(novaTelaRoot);
+
+        // Obtém o Stage atual (janela) e configura a nova cena
+        Stage stage = new Stage();
+        stage.setTitle("Gerenciamento de Empresa");
+        stage.setScene(novaTelaScene);
+        stage.show();
+    }
+
+
 
     @FXML
     protected void RelatorioPedidos(ActionEvent event) throws IOException {
@@ -155,8 +179,8 @@ public class mainController {
         stage.show();
     }
 
-
-    public void Ajuda(ActionEvent actionEvent) {
+    @FXML
+    protected void Ajuda(ActionEvent actionEvent) {
         //ImageView imageView = new ImageView(new Image(getClass().getResource("/com/faiskaburguer/img/faiskaburguer_logo.png").toExternalForm()));
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Sobre");

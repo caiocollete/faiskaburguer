@@ -2,12 +2,15 @@ package com.faiskaburguer.db.dal;
 
 import com.faiskaburguer.db.entidade.Empresa;
 import com.faiskaburguer.db.entidade.Endereco;
+import com.faiskaburguer.db.util.Mascaras;
 import com.faiskaburguer.db.util.SingletonDB;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.faiskaburguer.db.util.Mascaras.mascCnpj;
 
 public class EmpresaDAL implements IDAL <Empresa> {
     @Override
@@ -18,10 +21,10 @@ public class EmpresaDAL implements IDAL <Empresa> {
         String sql = """
                 INSERT INTO public.empresa(
                 emp_id, emp_razao, emp_fantasia, emp_cnpj, emp_fone, emp_email, emp_vlremb, end_id)
-        VALUES (#1, '#2', '#3', '#4', '#5', '#6', '#7', '#8);
+        VALUES (#1, '#2', '#3', '#4', '#5', '#6', '#7', '#8');
         """;
 
-        sql = sql.replace("#1", "" + (SingletonDB.getConexao().getMaxPK("empresa","emp_id"))+1);
+        sql = sql.replace("#1", "" + (SingletonDB.getConexao().getMaxPK("empresa","emp_id")+1));
         sql = sql.replace("#2", entidade.getEmp_razao());
         sql = sql.replace("#3", entidade.getEmp_fantasia());
         sql = sql.replace("#4", entidade.getEmp_cnpj());
@@ -52,8 +55,8 @@ public class EmpresaDAL implements IDAL <Empresa> {
 
     @Override
     public boolean apagar(Empresa entidade) {
-       SingletonDB.getConexao().manipular("DELETE FROM endereco WHERE end_id="+entidade.getEndereco().getId());
-       return SingletonDB.getConexao().manipular("DELETE FROM empresa WHERE emp_id="+entidade.getEmp_id());
+       int idEnd = entidade.getEndereco().getId();
+       return SingletonDB.getConexao().manipular("DELETE FROM empresa WHERE emp_id="+entidade.getEmp_id()) && SingletonDB.getConexao().manipular("DELETE FROM endereco WHERE end_id="+idEnd);
     }
 
     @Override
@@ -94,7 +97,7 @@ public class EmpresaDAL implements IDAL <Empresa> {
         try {
             while(resultSet.next()) {
                 Empresa empresa = new Empresa(resultSet.getInt("emp_id"),
-                        resultSet.getString("emp_razap"),
+                        resultSet.getString("emp_razao"),
                         resultSet.getString("emp_fantasia"),
                         resultSet.getString("emp_cnpj"),
                         resultSet.getString("emp_fone"),

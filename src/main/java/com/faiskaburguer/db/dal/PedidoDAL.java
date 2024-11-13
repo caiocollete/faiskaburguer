@@ -102,10 +102,16 @@ public class PedidoDAL implements IDAL <Pedido>{
 
     @Override
     public boolean apagar(Pedido entidade) {
-        SingletonDB.getConexao().manipular("DELETE FROM item WHERE ped_id="+entidade.getId());
+        int endId=0;
         if(entidade.getViagem()==1)
-            SingletonDB.getConexao().manipular("DELETE FROM endereco WHERE end_id="+entidade.getEndereco().getId());
-        return SingletonDB.getConexao().manipular("DELETE FROM pedido WHERE ped_id="+entidade.getId());
+            endId = entidade.getEndereco().getId();
+
+        SingletonDB.getConexao().manipular("DELETE FROM item WHERE ped_id="+entidade.getId());
+        boolean erro = SingletonDB.getConexao().manipular("DELETE FROM pedido WHERE ped_id="+entidade.getId());
+
+        if(entidade.getViagem()==1 && erro)
+            erro = SingletonDB.getConexao().manipular("DELETE FROM endereco WHERE end_id="+endId);
+        return erro;
     }
 
     @Override
