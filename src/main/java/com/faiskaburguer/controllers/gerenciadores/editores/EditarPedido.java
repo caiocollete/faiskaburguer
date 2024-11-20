@@ -199,45 +199,54 @@ public class EditarPedido {
 
     @FXML
     protected void RemoverProduto() {
-        // Verifica se há um item selecionado
+        // Verifica se há um item selecionado no ListView
         int index = listSelectionProds.getSelectionModel().getSelectedIndex();
         if (index >= 0) {
             // Remove a entrada selecionada no ListView
-            listSelectionProds.getItems().remove(index);
-
             Produtos produtoRemover = produtosSelecionados.get(index);
-
-            // Remove o produto de produtosSelecionados
+            listSelectionProds.getItems().remove(index);
             produtosSelecionados.remove(index);
 
             // Atualiza a quantidade ou remove da lista `listItens`
-            for (int i = 0; i < listItens.size(); i++) {
-                Pedido.Item item = listItens.get(i);
+            Pedido.Item itemRemover = null;
+
+            for (Pedido.Item item : pedido.getItens()) {
                 if (item.produtos().equals(produtoRemover)) {
                     if (item.quant() > 1) {
-                        // Atualiza o item com quantidade decrementada
-                        Pedido.Item itemAtualizado = new Pedido.Item(produtoRemover, item.quant() - 1, item.valor());
-                        listItens.set(i, itemAtualizado);
+                        // Atualiza o item com a quantidade decrementada
+                        Pedido.Item itemAtualizado = new Pedido.Item(
+                                item.produtos(),
+                                item.quant() - 1,
+                                item.valor()
+                        );
+                        pedido.getItens().set(pedido.getItens().indexOf(item), itemAtualizado);
                     } else {
-                        // Remove o item se a quantidade for 1
-                        listItens.remove(i);
+                        // Marca o item para remoção se a quantidade for 1
+                        itemRemover = item;
                     }
                     break;
                 }
             }
 
+            // Remove o item da lista se necessário
+            if (itemRemover != null) {
+                pedido.getItens().remove(itemRemover);
+            }
+
             // Atualiza o total do pedido
-            Double totalDouble = Double.parseDouble(total_pedido.getText().replace("R$", "").trim().replace(",", "."));
-            totalDouble -= produtoRemover.getValor();
-            total_pedido.setText("R$" + String.format("%.2f", totalDouble));
+            pedido.totalizar();
+            total_pedido.setText("R$ " + String.format("%.2f", pedido.getTotal()));
         } else {
+            // Nenhum produto selecionado
             System.out.println("Nenhum produto selecionado ou índice inválido.");
         }
 
-        System.out.println(listSelectionProds.toString());
-        System.out.println(produtosSelecionados.toString()); // DIMINUIR UM PRODUTO
-        System.out.println(listItens.toString()); // ESTA INSERINDO DUPLICADO
+        // Debugging opcional
+        System.out.println("Produtos selecionados: " + produtosSelecionados);
+        System.out.println("Itens do pedido: " + pedido.getItens());
     }
+
+
 
     @FXML
     protected void ativarEndereco(){

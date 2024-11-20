@@ -45,7 +45,7 @@ public class Pedido {
         this.listItens = new ArrayList<>();
     }
 
-    public Pedido(LocalDate now, String nomeCliente, String numeroCliente, Double finalTotalDouble, int viagem, TipoPagamento tipoPagamento, List<Item> listItens) {
+    public Pedido(LocalDate data, String clinome, String clifone, Double total, int viagem, TipoPagamento tipoPagamento, List<Item> listItens) {
         this.data = data;
         this.clinome = clinome;
         this.clifone = clifone;
