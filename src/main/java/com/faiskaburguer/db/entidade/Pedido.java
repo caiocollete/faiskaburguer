@@ -156,4 +156,8 @@ public class Pedido {
 
         return txt;
     }
+
+    public void setListItens(List<Pedido.Item> listItens) {
+        this.listItens = listItens;
+    }
 }

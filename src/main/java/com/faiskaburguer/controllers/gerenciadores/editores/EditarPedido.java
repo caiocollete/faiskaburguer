@@ -148,6 +148,12 @@ public class EditarPedido {
 
     @FXML
     protected void GravarPedido(ActionEvent event) {
+
+        System.out.printf("aaa");
+        for(Pedido.Item i: pedido.getItens()){
+            System.out.println(i.produtos()+"-"+i.quant());
+        }
+
         // Extrair e processar o valor total do pedido
         String total = total_pedido.getText();
         total = total.replace("R$", "").trim().replace(",", ".");
@@ -182,6 +188,7 @@ public class EditarPedido {
                 }
                 else this.pedido.setViagem(0);
                 this.pedido.setTotal(finalTotalDouble);
+                this.pedido.setListItens(listItens);
 
                 if(pedidoDAL.alterar(this.pedido)){
                     alert.setTitle("AVISO");
@@ -195,6 +202,7 @@ public class EditarPedido {
                 }
             }
         });
+
     }
 
     @FXML

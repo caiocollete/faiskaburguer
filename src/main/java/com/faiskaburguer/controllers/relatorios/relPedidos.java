@@ -2,17 +2,23 @@ package com.faiskaburguer.controllers.relatorios;
 
 import com.faiskaburguer.db.dal.PedidoDAL;
 import com.faiskaburguer.db.entidade.Pedido;
+import com.faiskaburguer.db.util.SingletonDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.view.JasperViewer;
 
 import javax.swing.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.RandomAccess;
 
@@ -80,46 +86,68 @@ public class relPedidos {
 
     @FXML
     protected void Salvar(ActionEvent event) throws IOException {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        fileChooser.showSaveDialog(null);
-
-        if (fileChooser.getSelectedFile() != null) {
-            int idx = pedidosSistema.getSelectionModel().getSelectedIndices().get(0);
-            Pedido pedido = pedidoList.get(idx);
-
-            // Definindo o nome do arquivo com a data do pedido
-            File file = new File(fileChooser.getSelectedFile().getAbsolutePath() + "/" + pedido.getData().toString() + ".txt");
-
-            try (FileWriter fw = new FileWriter(file)) { // Utilizando try-with-resources para fechar o FileWriter automaticamente
-                fw.write(pedido.toString());
-                // Opcional: Exibir mensagem de sucesso
-                System.out.println("Pedido salvo com sucesso em: " + file.getAbsolutePath());
-            } catch (IOException e) {
-                System.out.println("Erro ao salvar o pedido: " + e.getMessage());
-            }
-        }
+        int idx = pedidosSistema.getSelectionModel().getSelectedIndices().get(0);
+        Pedido pedido = pedidoList.get(idx);
+        gerarRelatorio("SELECT * FROM pedidos WHERE ped_id="+pedido.getId(),"todos");
+//        JFileChooser fileChooser = new JFileChooser();
+//        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+//        fileChooser.showSaveDialog(null);
+//
+//        if (fileChooser.getSelectedFile() != null) {
+//            int idx = pedidosSistema.getSelectionModel().getSelectedIndices().get(0);
+//            Pedido pedido = pedidoList.get(idx);
+//
+//            // Definindo o nome do arquivo com a data do pedido
+//            File file = new File(fileChooser.getSelectedFile().getAbsolutePath() + "/" + pedido.getData().toString() + ".txt");
+//
+//            try (FileWriter fw = new FileWriter(file)) { // Utilizando try-with-resources para fechar o FileWriter automaticamente
+//                fw.write(pedido.toString());
+//                // Opcional: Exibir mensagem de sucesso
+//                System.out.println("Pedido salvo com sucesso em: " + file.getAbsolutePath());
+//            } catch (IOException e) {
+//                System.out.println("Erro ao salvar o pedido: " + e.getMessage());
+//            }
+//        }
     }
 
 
     @FXML
     protected void SalvarTudo(ActionEvent event) {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        fileChooser.showSaveDialog(null);
+        gerarRelatorio("SELECT * FROM pedidos","todos");
+//        JFileChooser fileChooser = new JFileChooser();
+//        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+//        fileChooser.showSaveDialog(null);
+//
+//        if (fileChooser.getSelectedFile() != null) {
+//            File file = new File(fileChooser.getSelectedFile().getAbsolutePath() + "/" + "Todos_Os_Pedidos.txt");
+//
+//            try (FileWriter fw = new FileWriter(file, true)) { // 'true' ativa o modo append
+//                for (Pedido p : pedidoList) {
+//                    fw.write(p.toString() + System.lineSeparator()); // Adiciona uma nova linha após cada pedido
+//                    System.out.println("Pedido #" + p.getId() + " salvo com sucesso em: " + file.getAbsolutePath());
+//                }
+//            } catch (IOException e) {
+//                System.out.println("Erro ao salvar os pedidos: " + e.getMessage());
+//            }
+//        }
+    }
 
-        if (fileChooser.getSelectedFile() != null) {
-            File file = new File(fileChooser.getSelectedFile().getAbsolutePath() + "/" + "Todos_Os_Pedidos.txt");
-
-            try (FileWriter fw = new FileWriter(file, true)) { // 'true' ativa o modo append
-                for (Pedido p : pedidoList) {
-                    fw.write(p.toString() + System.lineSeparator()); // Adiciona uma nova linha após cada pedido
-                    System.out.println("Pedido #" + p.getId() + " salvo com sucesso em: " + file.getAbsolutePath());
-                }
-            } catch (IOException e) {
-                System.out.println("Erro ao salvar os pedidos: " + e.getMessage());
-            }
-        }
+    private void gerarRelatorio(String sql,String relat)
+    {
+        try
+        { //sql para obter os dados para o relatorio
+            ResultSet rs = SingletonDB.getConexao().consultar(sql);
+            //implementação da interface JRDataSource para DataSource ResultSet
+            JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
+            //chamando o relatório
+            String jasperPrint =
+                    JasperFillManager.fillReportToFile("reports/"+relat,null, jrRS);
+            JasperViewer viewer = new JasperViewer(jasperPrint, false, false);
+            viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);//maximizado
+            viewer.setTitle("Relatório de Alunos");//titulo do relatório
+            viewer.setVisible(true);
+        } catch (JRException erro)
+        {  erro.printStackTrace(); }
     }
 
     private void clearAll() {
