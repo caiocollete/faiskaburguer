@@ -1,4 +1,4 @@
-# 🍔 FaiskaBurguer (EM DESENVOLVIMENTO)
+# 🍔 FaiskaBurguer
 
 Sistema de gerenciamento de pedidos para lanchonetes e restaurantes, desenvolvido em Java com JavaFX e PostgreSQL. O projeto visa otimizar o processo de gerenciamento de pedidos e pagamentos, oferecendo uma interface intuitiva e funcionalidades avançadas para a equipe operacional de estabelecimentos alimentícios.
 
@@ -9,7 +9,8 @@ O FaiskaBurguer é um sistema de pedidos para lanchonetes e restaurantes, que pe
 ## Funcionalidades
 
 - **Cadastro de Produtos e Tipos de Pagamento**: Permite registrar produtos e diferentes formas de pagamento.
-- **Gerenciamento de Pedidos**: Adiciona produtos a um pedido com quantidade e valor, incluindo controle de pedidos duplicados.
+- **Gerenciamento de Pedidos**: Adiciona produtos a um pedido com quantidade e valor, incluindo controle de pedidos.
+- **Criação de Relatórios**: Gera relatório de pedidos, podendo escolher se quer gerar para todos os pedidos existentes ou apenas um especifico.
 - **Controle de Entrega**: Possibilidade de marcar pedidos como "para viagem" e adicionar taxa de entrega.
 - **Cálculo Automático do Total**: Calcula o valor total do pedido automaticamente ao adicionar ou remover produtos.
 - **Banco de Dados**: Utiliza PostgreSQL para armazenamentodos dados.
@@ -18,7 +19,7 @@ O FaiskaBurguer é um sistema de pedidos para lanchonetes e restaurantes, que pe
 
 - **Java 21+** com **JavaFX** para a interface gráfica
 - **PostgreSQL** para o banco de dados
-- **JDBC** para abstração do banco de dados - OBS: pretendo migrar ao JPA
+- **JDBC** para abstração do banco de dados
 
 ## Pré-Requisitos
 
