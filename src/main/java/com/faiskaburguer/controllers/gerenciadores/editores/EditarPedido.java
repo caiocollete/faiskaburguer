@@ -123,8 +123,9 @@ public class EditarPedido {
                 if (!itemExiste) {
                     Pedido.Item novoItem = new Pedido.Item(produto, 1, produto.getValor());
                     listItens.add(novoItem);
-                }
 
+                }
+                pedido.setListItens(listItens);
 
                 // Atualiza o total do pedido
                 Double totalDouble = Double.parseDouble(total_pedido.getText().replace("R$", "").trim().replace(",", "."));
@@ -149,7 +150,6 @@ public class EditarPedido {
     @FXML
     protected void GravarPedido(ActionEvent event) {
 
-        System.out.printf("aaa");
         for(Pedido.Item i: pedido.getItens()){
             System.out.println(i.produtos()+"-"+i.quant());
         }
@@ -173,7 +173,11 @@ public class EditarPedido {
         // Mostrar diálogo de confirmação do pedido
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmação de Pedido");
-        alert.setContentText("Valor total do pedido: " + total);
+        String alertContetText = "Valor total do pedido: ";
+        if(viagem_check.isSelected()){
+            alertContetText = "Valor total do pedido com a taxa de entrega: ";
+        }
+        alert.setContentText(alertContetText + total );
         alert.showAndWait().ifPresent(response -> {
 
             if(response == ButtonType.OK){
@@ -188,7 +192,7 @@ public class EditarPedido {
                 }
                 else this.pedido.setViagem(0);
                 this.pedido.setTotal(finalTotalDouble);
-                this.pedido.setListItens(listItens);
+                this.pedido.setListItens(pedido.getItens());
 
                 if(pedidoDAL.alterar(this.pedido)){
                     alert.setTitle("AVISO");

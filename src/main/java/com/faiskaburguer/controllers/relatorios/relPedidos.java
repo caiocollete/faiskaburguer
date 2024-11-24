@@ -2,25 +2,22 @@ package com.faiskaburguer.controllers.relatorios;
 
 import com.faiskaburguer.db.dal.PedidoDAL;
 import com.faiskaburguer.db.entidade.Pedido;
-import com.faiskaburguer.db.util.SingletonDB;
+
+import com.itextpdf.layout.element.Paragraph;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRResultSetDataSource;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.view.JasperViewer;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+
 
 import javax.swing.*;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.util.List;
-import java.util.RandomAccess;
 
 public class relPedidos {
 
@@ -85,70 +82,93 @@ public class relPedidos {
     }
 
     @FXML
-    protected void Salvar(ActionEvent event) throws IOException {
-        int idx = pedidosSistema.getSelectionModel().getSelectedIndices().get(0);
-        Pedido pedido = pedidoList.get(idx);
-        gerarRelatorio("SELECT * FROM pedidos WHERE ped_id="+pedido.getId(),"todos");
-//        JFileChooser fileChooser = new JFileChooser();
-//        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-//        fileChooser.showSaveDialog(null);
-//
-//        if (fileChooser.getSelectedFile() != null) {
-//            int idx = pedidosSistema.getSelectionModel().getSelectedIndices().get(0);
-//            Pedido pedido = pedidoList.get(idx);
-//
-//            // Definindo o nome do arquivo com a data do pedido
-//            File file = new File(fileChooser.getSelectedFile().getAbsolutePath() + "/" + pedido.getData().toString() + ".txt");
-//
-//            try (FileWriter fw = new FileWriter(file)) { // Utilizando try-with-resources para fechar o FileWriter automaticamente
-//                fw.write(pedido.toString());
-//                // Opcional: Exibir mensagem de sucesso
-//                System.out.println("Pedido salvo com sucesso em: " + file.getAbsolutePath());
-//            } catch (IOException e) {
-//                System.out.println("Erro ao salvar o pedido: " + e.getMessage());
-//            }
-//        }
-    }
+    protected void Salvar(ActionEvent event) {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fileChooser.showSaveDialog(null);
 
+        if (fileChooser.getSelectedFile() != null) {
+            int idx = pedidosSistema.getSelectionModel().getSelectedIndices().get(0);
+            Pedido pedido = pedidoList.get(idx);
+
+            // Caminho do arquivo PDF
+            String pdfFilePath = fileChooser.getSelectedFile().getAbsolutePath() + "/" + pedido.getData().toString() + ".pdf";
+
+            try (PdfWriter writer = new PdfWriter(pdfFilePath);
+                 Document document = new Document(new com.itextpdf.kernel.pdf.PdfDocument(writer))) {
+
+                // Adicionar informações do pedido no PDF
+                document.add(new Paragraph("Informações do Pedido"));
+                document.add(new Paragraph("Nome: " + pedido.getClinome()));
+                document.add(new Paragraph("Telefone: " + pedido.getClifone()));
+                document.add(new Paragraph("Data: " + pedido.getData().toString()));
+
+                if (pedido.getViagem() == 1) {
+                    document.add(new Paragraph("Endereço:"));
+                    document.add(new Paragraph("Rua: " + pedido.getEndereco().getRua()));
+                    document.add(new Paragraph("Número: " + pedido.getEndereco().getNumero()));
+                    document.add(new Paragraph("Cidade: " + pedido.getEndereco().getCidade()));
+                    document.add(new Paragraph("UF: " + pedido.getEndereco().getUf()));
+                    document.add(new Paragraph("Bairro: " + pedido.getEndereco().getBairro()));
+                }
+
+                document.add(new Paragraph("\nItens do Pedido:"));
+                for (Pedido.Item item : pedido.getItens()) {
+                    document.add(new Paragraph("- " + item.produtos().getNome() + " (Quantidade: " + item.quant() + ")"));
+                }
+
+                System.out.println("PDF gerado com sucesso em: " + pdfFilePath);
+
+            } catch (IOException e) {
+                System.out.println("Erro ao gerar o PDF: " + e.getMessage());
+            }
+        }
+    }
 
     @FXML
     protected void SalvarTudo(ActionEvent event) {
-        gerarRelatorio("SELECT * FROM pedidos","todos");
-//        JFileChooser fileChooser = new JFileChooser();
-//        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-//        fileChooser.showSaveDialog(null);
-//
-//        if (fileChooser.getSelectedFile() != null) {
-//            File file = new File(fileChooser.getSelectedFile().getAbsolutePath() + "/" + "Todos_Os_Pedidos.txt");
-//
-//            try (FileWriter fw = new FileWriter(file, true)) { // 'true' ativa o modo append
-//                for (Pedido p : pedidoList) {
-//                    fw.write(p.toString() + System.lineSeparator()); // Adiciona uma nova linha após cada pedido
-//                    System.out.println("Pedido #" + p.getId() + " salvo com sucesso em: " + file.getAbsolutePath());
-//                }
-//            } catch (IOException e) {
-//                System.out.println("Erro ao salvar os pedidos: " + e.getMessage());
-//            }
-//        }
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fileChooser.showSaveDialog(null);
+
+        if (fileChooser.getSelectedFile() != null) {
+            String pdfFilePath = fileChooser.getSelectedFile().getAbsolutePath() + "/Todos_Os_Pedidos.pdf";
+
+            try (PdfWriter writer = new PdfWriter(pdfFilePath);
+                 Document document = new Document(new com.itextpdf.kernel.pdf.PdfDocument(writer))) {
+
+                document.add(new Paragraph("Todos os Pedidos\n"));
+
+                for (Pedido pedido : pedidoList) {
+                    document.add(new Paragraph("Pedido ID: " + pedido.getId()));
+                    document.add(new Paragraph("Nome: " + pedido.getClinome()));
+                    document.add(new Paragraph("Telefone: " + pedido.getClifone()));
+                    document.add(new Paragraph("Data: " + pedido.getData().toString()));
+
+                    if (pedido.getViagem() == 1) {
+                        document.add(new Paragraph("Endereço:"));
+                        document.add(new Paragraph("Rua: " + pedido.getEndereco().getRua()));
+                        document.add(new Paragraph("Número: " + pedido.getEndereco().getNumero()));
+                        document.add(new Paragraph("Cidade: " + pedido.getEndereco().getCidade()));
+                        document.add(new Paragraph("UF: " + pedido.getEndereco().getUf()));
+                        document.add(new Paragraph("Bairro: " + pedido.getEndereco().getBairro()));
+                    }
+
+                    document.add(new Paragraph("Itens do Pedido:"));
+                    for (Pedido.Item item : pedido.getItens()) {
+                        document.add(new Paragraph("- " + item.produtos().getNome() + " (Quantidade: " + item.quant() + ")"));
+                    }
+                    document.add(new Paragraph("\n"));
+                }
+
+                System.out.println("PDF gerado com sucesso em: " + pdfFilePath);
+
+            } catch (IOException e) {
+                System.out.println("Erro ao gerar o PDF: " + e.getMessage());
+            }
+        }
     }
 
-    private void gerarRelatorio(String sql,String relat)
-    {
-        try
-        { //sql para obter os dados para o relatorio
-            ResultSet rs = SingletonDB.getConexao().consultar(sql);
-            //implementação da interface JRDataSource para DataSource ResultSet
-            JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
-            //chamando o relatório
-            String jasperPrint =
-                    JasperFillManager.fillReportToFile("reports/"+relat,null, jrRS);
-            JasperViewer viewer = new JasperViewer(jasperPrint, false, false);
-            viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);//maximizado
-            viewer.setTitle("Relatório de Alunos");//titulo do relatório
-            viewer.setVisible(true);
-        } catch (JRException erro)
-        {  erro.printStackTrace(); }
-    }
 
     private void clearAll() {
         nome.clear();

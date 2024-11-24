@@ -128,7 +128,11 @@ public class cadPedido {
         // Mostrar diálogo de confirmação do pedido
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmação de Pedido");
-        alert.setContentText("Valor total do pedido: " + total);
+        String alertContetText = "Valor total do pedido: ";
+        if(viagem_check.isSelected()){
+            alertContetText = "Valor total do pedido com a taxa de entrega: ";
+        }
+        alert.setContentText(alertContetText + total );
 
         // Captura a resposta do usuário
         Double finalTotalDouble = totalDouble;

@@ -5,7 +5,8 @@ module com.faiskaburguer {
     requires java.sql;
     requires com.google.gson;
     requires java.desktop;
-    requires jasperreports;
+    requires layout;
+    requires kernel;
 
 
     opens com.faiskaburguer to javafx.fxml;
