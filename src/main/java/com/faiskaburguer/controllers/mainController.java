@@ -186,7 +186,7 @@ public class mainController {
         alert.setTitle("Sobre");
         alert.setHeaderText("Faiska Burguer");
         //alert.setGraphic(imageView);
-        alert.setContentText("Desenvolvido por Caio Collete\n");
+        alert.setContentText("Email: contato@faiskaburguer.com\nFone: (18) 9999-0000");
         alert.show();
     }
 }
