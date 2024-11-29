@@ -22,15 +22,19 @@
             <TextField fx:id="emp_email_field" layoutX="133.0" layoutY="159.0" promptText="email@email.com" />
             <Text layoutX="135.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
             <Text layoutX="316.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor embalagem" />
-            <TextField fx:id="emp_cep_field" layoutX="93.0" layoutY="272.0" promptText="00000-000" />
-            <Text layoutX="94.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CEP" />
-            <TextField fx:id="emp_rua_field" layoutX="275.0" layoutY="272.0" promptText="das Palmeiras" />
-            <Text layoutX="276.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logradouro" />
+            <TextField fx:id="emp_cep_field" layoutX="93.0" layoutY="251.0" promptText="00000-000" />
+            <Text layoutX="94.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CEP" />
+            <TextField fx:id="emp_rua_field" layoutX="275.0" layoutY="251.0" promptText="das Palmeiras" />
+            <Text layoutX="276.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logradouro" />
             <TextField fx:id="emp_valoremb_field" layoutX="316.0" layoutY="159.0" promptText="00.00" />
-            <TextField fx:id="emp_nrua_field" layoutX="442.0" layoutY="272.0" prefHeight="27.0" prefWidth="66.0" promptText="10" />
-            <Text layoutX="443.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número" />
+            <TextField fx:id="emp_nrua_field" layoutX="442.0" layoutY="251.0" prefHeight="27.0" prefWidth="66.0" promptText="10" />
+            <Text layoutX="443.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número" />
             <Separator layoutX="-5.0" layoutY="223.0" prefHeight="2.0" prefWidth="606.0" />
                 <Button fx:id="Cadastrar" layoutX="487.0" layoutY="331.0" mnemonicParsing="false" onAction="#CadastrarEmpresa" prefHeight="25.0" prefWidth="75.0" text="Gravar" />
+            <TextField fx:id="emp_cidade_field" editable="false" layoutX="93.0" layoutY="306.0" />
+            <Text layoutX="94.0" layoutY="302.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cidade" />
+            <TextField fx:id="emp_uf_field" editable="false" layoutX="280.0" layoutY="306.0" prefHeight="25.0" prefWidth="50.0" />
+            <Text layoutX="281.0" layoutY="302.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UF" />
             </children>
         </Pane>
     </center>

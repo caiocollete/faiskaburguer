@@ -40,6 +40,12 @@ public class EditarEmpresa {
     @FXML
     private TextField emp_nrua_field;
 
+    @FXML
+    private TextField emp_cidade_field;
+
+    @FXML
+    private TextField emp_uf_field;
+
     private Empresa empresa;
 
 
@@ -59,6 +65,8 @@ public class EditarEmpresa {
                 emp_cep_field.setText(empresa.getEndereco().getCep());
                 emp_rua_field.setText(empresa.getEndereco().getRua());
                 emp_nrua_field.setText(empresa.getEndereco().getNumero());
+                emp_cidade_field.setText(empresa.getEndereco().getCidade());
+                emp_uf_field.setText(empresa.getEndereco().getUf());
             }
             emp_valoremb_field.setText(empresa.getEmp_vlremb().toString());
         }
@@ -77,7 +85,7 @@ public class EditarEmpresa {
         EnderecoDAL enderecoDAL = new EnderecoDAL();
         if(enderecoDAL.gravar(empresa.getEndereco())){
             EmpresaDAL empresaDAL = new EmpresaDAL();
-            empresaDAL.gravar(empresa);
+            empresaDAL.alterar(empresa);
         }
     }
 

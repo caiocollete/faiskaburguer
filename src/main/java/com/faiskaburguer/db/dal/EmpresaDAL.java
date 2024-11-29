@@ -39,8 +39,8 @@ public class EmpresaDAL implements IDAL <Empresa> {
     public boolean alterar(Empresa entidade) {
     String sql = """
                UPDATE public.empresa
-               SET  emp_razao='#1', emp_fantasia='#2', emp_cnpj='#3', emp_fone='#4', emp_email='#5', emp_vlremb=#6
-               WHERE emp_id='#7';
+               SET  emp_razao='#1', emp_fantasia='#2', emp_cnpj='#3', emp_fone='#4', emp_email='#5', emp_vlremb=#6, end_id=#7
+               WHERE emp_id='#8';
                 """;
 
         sql = sql.replace("#1", entidade.getEmp_razao());
@@ -49,7 +49,8 @@ public class EmpresaDAL implements IDAL <Empresa> {
         sql = sql.replace("#4", entidade.getEmp_fone());
         sql = sql.replace("#5", entidade.getEmp_email());
         sql = sql.replace("#6", ""+entidade.getEmp_vlremb());
-        sql = sql.replace("#7", ""+entidade.getEmp_id());
+        sql = sql.replace("#7", ""+SingletonDB.getConexao().getMaxPK("endereco","end_id"));
+        sql = sql.replace("#8", ""+entidade.getEmp_id());
         return SingletonDB.getConexao().manipular(sql);
     }
 
